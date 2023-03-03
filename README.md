@@ -40,7 +40,7 @@ To setup the development environment ensure you have the following software inst
 | POSIX (bash/zsh)  | `$ source venv/bin/activate`    |
 | POSIX (fish)      | `$ source venv/bin/activate.fish`    | 
 | POSIX (csh/tcsh)      | `$ source venv/bin/activate.csh`     | 
-| POSIX (PowerShell | `$ venv/bin/Activate.ps1` |
+| POSIX (PowerShell) | `$ venv/bin/Activate.ps1` |
 
 
 4. Install python requirements `pip install -r requirements.txt`
