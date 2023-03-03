@@ -31,7 +31,7 @@ To setup the development environment ensure you have the following software inst
 
 1. Open a new terminal in Visual Studio Code
 2. Create a python environment with `python3 -m venv venv`
-3. Activate/enter the python environment
+3. Activate/enter the python environment using command that corresponds to the platform and shell that you are using (see below)
 
 | Platform  | Command to activate virtual environment |
 | ------------- |--| 
