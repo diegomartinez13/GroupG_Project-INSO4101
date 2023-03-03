@@ -24,7 +24,7 @@ To setup the development environment ensure you have the following software inst
 
 #### Cloning the project
 1. Open a new Visual Studio Code Window
-2. Select *Clone Git Repository* and follow the step to connecting to your account
+2. Select *Clone Git Repository* and follow the steps to connect your GitHub account
 3. Provide the repository URL (https://github.com/diegomartinez13/GroupG_Project-INSO4101.git)
 
 #### Backend
