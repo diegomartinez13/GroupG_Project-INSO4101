@@ -77,3 +77,8 @@ webpack compiled successfully
 #### Database
 1. Open a new terminal in Visual Studio Code
 2. Run `docker-compose up -d`
+3. You should see an output similar to the following
+```
+[+] Running 1/1
+ - Container groupg_project-inso4101-db-1  Started                                                                 4.7s
+ ```
