@@ -59,8 +59,9 @@ Press CTRL+C to quit
 #### Frontend
 1. Open a new terminal in Visual Studio Code
 2. Navigate to the frontend folder `cd frontend`
-3. Run `npm start`
-4. If everything was successful you should see the following
+3. Run `npm install`
+4. Run `npm start`
+5. If everything was successful you should see the following
 ```
 Compiled successfully!
 You can now view frontend in the browser.
