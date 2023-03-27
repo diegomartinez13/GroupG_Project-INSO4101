@@ -1,6 +1,6 @@
 import React from 'react';
 import { BrowserRouter, Routes, Route } from 'react-router-dom';
-import Navigation from './components/Navigation';
+import SideNavigation from './components/SideNavigation';
 import HomePage from './pages/HomePage';
 import EventsPage from './pages/EventsPage';
 import RecyclingCentersPage from './pages/RecyclingCentersPage';
@@ -10,7 +10,7 @@ import ForumPage from './pages/ForumPage';
 function App() {
   return (
     <BrowserRouter>
-      <Navigation />
+      <SideNavigation />
       <Routes>
         <Route path="/" element={<HomePage />} />
         <Route path="/events" element={<EventsPage />} />
