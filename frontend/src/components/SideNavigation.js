@@ -1,46 +1,57 @@
 import React, { useState } from 'react';
-import { NavLink, useNavigate, useLocation } from 'react-router-dom';
-import { styled, Box, Button, List, ListItem, ListItemIcon, ListItemText, BottomNavigation, BottomNavigationAction } from '@mui/material';
+import { NavLink, useLocation } from 'react-router-dom';
+import { styled, List, ListItem, ListItemIcon, ListItemText, BottomNavigation, BottomNavigationAction } from '@mui/material';
 import { IconButton } from '@mui/material';
-import { Menu, HomeOutlined, EventOutlined, AccountCircleOutlined, DeleteOutlined, ForumOutlined, DeleteOutlineOutlined, Home, Event, PersonOutline, Forum, Delete, Person } from '@mui/icons-material';
+import { Menu, AccountCircle, HomeOutlined, EventOutlined, AccountCircleOutlined, ForumOutlined, Home, Event, PersonOutline, Forum, Person, Map, MapOutlined } from '@mui/icons-material';
 
 const SideNavWrapper = styled('div')(({ theme, open }) => ({
   position: 'fixed',
   top: 0,
   bottom: 0,
   left: 0,
-  width: open ? '240px' : '56px',
+  width: open ? '16em' : '4em',
   transition: theme.transitions.create('width', {
     easing: theme.transitions.easing.sharp,
     duration: theme.transitions.duration.standard,
   }),
-  backgroundColor: theme.palette.primary.main,
+  backgroundColor: theme.palette.surface.main,
   color: theme.palette.common.white,
 }));
 
 const ToggleButton = styled(IconButton)(({ theme }) => ({
-  color: theme.palette.common.white,
+  color: theme.palette.surface.onVariant,
+  alignContent: 'center',
+  justifyContent: 'center',
+  marginLeft: '0.5em',
   '&:hover': {
-    backgroundColor: 'rgba(255, 255, 255, 0.08)',
+    backgroundColor: theme.palette.secondary.container.main,
   },
 }));
 
 const NavList = styled(List)(({ theme }) => ({
   paddingTop: theme.spacing(6),
+  marginRight: theme.spacing(0.5),
+  marginLeft: theme.spacing(0.5),
 }));
 
 const NavListItem = styled(ListItem)(({ theme }) => ({
+  color: theme.palette.surface.onVariant,
   '&:hover': {
-    backgroundColor: 'rgba(255, 255, 255, 0.08)',
+    backgroundColor: theme.palette.secondary.container.main,
+    // Round the corners of the list item
+    borderRadius: '0.8rem',
+    color: theme.palette.secondary.container.onContainer,
+    text: theme.palette.secondary.container.onContainerText,
+
   },
 }));
 
 const NavListItemIcon = styled(ListItemIcon)(({ theme }) => ({
-  color: theme.palette.common.white,
+  color: theme.palette.surface.onVariant,
 }));
 
 const NavListItemText = styled(ListItemText)(({ theme }) => ({
-  color: theme.palette.common.white,
+  color: theme.palette.surface.onVariant,
 }));
 
 const BottomNavWrapper = styled(BottomNavigation)(({ theme }) => ({
@@ -48,24 +59,46 @@ const BottomNavWrapper = styled(BottomNavigation)(({ theme }) => ({
   bottom: 0,
   left: 0,
   right: 0,
-  backgroundColor: theme.palette.primary.main,
-  color: theme.palette.common.white,
+  backgroundColor: theme.palette.surface.main,
+  color: theme.palette.surface.onVariant,
+
 }));
 
 const BottomNavAction = styled(BottomNavigationAction)(({ theme }) => ({
-  color: theme.palette.common.white,
+  color: theme.palette.surface.onVariant,
+  minWidth: 0,
+  margin: '0.5rem',
+  padding: theme.spacing(1),
+  '& .MuiBottomNavigationAction-iconOnly': {
+    fontSize: '1.2rem',
+  },
+  '& .MuiSvgIcon-root': {
+    fontSize: '1.5rem',
+  },
+  '@media (max-width: 600px)': {
+    '& .MuiBottomNavigationAction-iconOnly': {
+      fontSize: '1rem',
+    },
+    '& .MuiSvgIcon-root': {
+      fontSize: '1.2rem',
+    },
+  },
+  '&:hover': {
+    backgroundColor: theme.palette.secondary.container.main,
+    color: theme.palette.secondary.container.onContainer,
+    text: theme.palette.secondary.container.onContainerText,
+    borderRadius: '0.8rem',
+  },
 }));
 
-const SideNavigation = () => {
+function SideNavigation({ onToggleMenu }) {
   const [isOpen, setIsOpen] = useState(false);
   const location = useLocation();
-  const navigate = useNavigate();
-  const handleNavigation = (path) => {
-    navigate(path);
-  }
+  
 
   const handleToggle = () => {
     setIsOpen(!isOpen);
+    onToggleMenu();
   };
   
   const isMobile = window.innerWidth < 600;
@@ -73,10 +106,11 @@ const SideNavigation = () => {
   if (isMobile) {
     return (
       <BottomNavWrapper>
-        <BottomNavAction label="Events" icon={<EventOutlined />} component={NavLink} to="/" />
-        <BottomNavAction label="Forum" icon={<ForumOutlined />} component={NavLink} to="/forum" />
-        <BottomNavAction label="Recycling Centers" icon={<DeleteOutlined />} component={NavLink} to="/recycling-centers" />
-        <BottomNavAction label="Profile" icon={<AccountCircleOutlined />} component={NavLink} to="/profile" />
+        <BottomNavAction showLabel={true} label="Home" icon={location.pathname === '/' ? <Home /> : <HomeOutlined />} component={NavLink} to="/" />
+        <BottomNavAction showLabel={true} label="Events" icon={location.pathname === '/events' ? <Event /> : <EventOutlined />} component={NavLink} to="/events" />
+        <BottomNavAction showLabel={true} label="Forum" icon={location.pathname === '/forum' ? <Forum /> : <ForumOutlined />} component={NavLink} to="/forum" />
+        <BottomNavAction showLabel={true} label="Map" icon={location.pathname === '/recycling-centers' ? <Map /> : <MapOutlined />} component={NavLink} to="/recycling-centers" />
+        <BottomNavAction showLabel={true} label="Profile" icon={location.pathname === '/profile' ? <AccountCircle /> : <AccountCircleOutlined />} component={NavLink} to="/profile" />
       </BottomNavWrapper>
     );
   }
@@ -86,35 +120,35 @@ const SideNavigation = () => {
         {isOpen ? <Menu /> : <Menu />}
       </ToggleButton>
       <NavList>
-        <NavListItem button component={NavLink} to="/" exact activeClassName="Mui-selected">
+        <NavListItem button component={NavLink} to="/"  >
           <NavListItemIcon>
             {location.pathname === '/' ? <Home /> : <HomeOutlined />}
           </NavListItemIcon>
-          <NavListItemText primary="Home" />
+          <NavListItemText primary={isOpen ? "Home" : ""} />
         </NavListItem>
-        <NavListItem button component={NavLink} to="/events" exact activeClassName="Mui-selected">
+        <NavListItem button component={NavLink} to="/events"  >
           <NavListItemIcon>
             {location.pathname === '/events' ? <Event /> : <EventOutlined />}
           </NavListItemIcon>
-          <NavListItemText primary="Events" />
+          <NavListItemText primary={isOpen ? "Events" : ""} />
         </NavListItem>
-        <NavListItem button component={NavLink} to="/forum" exact activeClassName="Mui-selected">
+        <NavListItem button component={NavLink} to="/forum"  >
           <NavListItemIcon>
             {location.pathname === '/forum' ? <Forum /> : <ForumOutlined />}
           </NavListItemIcon>
-          <NavListItemText primary="Forum" />
+          <NavListItemText primary={isOpen ? "Forum" : "" } />
         </NavListItem>
-        <NavListItem button component={NavLink} to="/recycling-centers" exact activeClassName="Mui-selected">
+        <NavListItem button component={NavLink} to="/recycling-centers"  >
           <NavListItemIcon>
-            {location.pathname === '/recycling-centers' ? <Delete /> : <DeleteOutlineOutlined />}
+            {location.pathname === '/recycling-centers' ? <Map /> : <MapOutlined />}
           </NavListItemIcon>
-          <NavListItemText primary="Recycling Centers" />
+          <NavListItemText primary={isOpen ? "Recycling Centers" : "" } />
         </NavListItem>
-        <NavListItem button component={NavLink} to="/profile" exact activeClassName="Mui-selected">
+        <NavListItem button component={NavLink} to="/profile"  >
           <NavListItemIcon>
             {location.pathname === '/profile' ? <Person /> : <PersonOutline />}
           </NavListItemIcon>
-          <NavListItemText primary="Profile" />
+          <NavListItemText primary={isOpen ? "Profile" : "" } />
         </NavListItem>
       </NavList>
     </SideNavWrapper>
