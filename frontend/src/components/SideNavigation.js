@@ -101,7 +101,7 @@ function SideNavigation({ onToggleMenu }) {
     onToggleMenu();
   };
   
-  const isMobile = window.innerWidth < 600;
+  const isMobile = window.innerWidth < 900;
 
   if (isMobile) {
     return (
