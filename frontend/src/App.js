@@ -156,7 +156,7 @@ const dark_theme = createTheme({
   },
 });
 
-
+const isSmallScreen = window.innerWidth < 900;
 
 function App() {
   const [isOpen, setIsOpen] = useState(false);
@@ -181,7 +181,7 @@ function App() {
           <Container maxWidth="xl" sx={{ padding: 0 }}>
             <Box sx={{ display: 'flex', flexDirection: 'column', height: '100vh' }}>
               <Box sx={{ display: 'flex', flexGrow: 1 }}>
-                  <Box sx={{ width: '16em' }}>
+                  <Box sx={{ width: isSmallScreen? 0:'16em' }}>
                     <SideNavigation onToggleMenu={toggleMenu} />
                   </Box>
                 <Box sx={{ flexGrow: 1 }}>
