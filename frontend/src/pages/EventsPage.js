@@ -1,11 +1,16 @@
+import { Grid } from '@mui/material';
 import React from 'react';
+import EventsCalendar from '../components/EventsCalendar';
 
 function EventsPage() {
   return (
-    <div>
-      <h1>Events</h1>
-      <p>Check out our upcoming events!</p>
-    </div>
+    <Grid container spacing={2} justifyContent="center">
+        <Grid item xs={12}>
+          <EventsCalendar></EventsCalendar>
+        </Grid>
+      </Grid>
+    
+    
   );
 }
 

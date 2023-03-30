@@ -15,7 +15,7 @@ function ThemeToggle({ onToggleDarkMode, themeType }) {
       zIndex: 9999,
     }}>
       <IconButton onClick={handleToggleDarkMode}>
-        {themeType ? <Brightness7 /> : <Brightness4 />  }
+        {themeType ? <Brightness7 sx={{ color: "#fff"}} /> : <Brightness4  style={{ color: "#000 "}}/>  }
       </IconButton>
     </div>
   );

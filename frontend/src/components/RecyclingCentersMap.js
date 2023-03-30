@@ -1,8 +1,12 @@
 import React from "react";
 import { MapContainer, TileLayer, Marker, Popup, useMap } from "react-leaflet";
-import { Card, CardHeader } from "@mui/material";
+import { Card, CardHeader, useMediaQuery, styled } from "@mui/material";
 
 const start = [18.1995, -67.1448];
+
+const StyledCardHeader = styled(CardHeader)(({ theme }) => ({
+    color: theme.palette.surface.text,
+    }));
 
 const RecyclingCentersMap = () => {
     
@@ -21,8 +25,7 @@ const RecyclingCentersMap = () => {
       },
     ];
 
-    const isSmallScreen = window.innerWidth < 900;
-    console.log(isSmallScreen);
+    const isSmallScreen = useMediaQuery('(max-width: 600px)');
   
     function MyMap() {
       const map = useMap();
@@ -32,7 +35,7 @@ const RecyclingCentersMap = () => {
   
     return (
         <>
-        <CardHeader title="Recycling Centers" />
+        <StyledCardHeader title="Recycling Centers"/>
         <Card sx={{borderRadius: 2}  }>
             
       <div style={{ height: isSmallScreen ? "60vh" : "calc(100vh - 240px)" }}>
