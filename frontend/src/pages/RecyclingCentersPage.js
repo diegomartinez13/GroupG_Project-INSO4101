@@ -1,11 +1,13 @@
 import React from 'react';
+import {  Container } from '@mui/material';
+import RecyclingCentersMap from "../components/RecyclingCentersMap";
+
 
 function RecyclingCentersPage() {
   return (
-    <div>
-      <h1>Recycling Centers</h1>
-      <p>Find recycling centers near you!</p>
-    </div>
+    <Container maxWidth="lg">
+      <RecyclingCentersMap />
+    </Container>
   );
 }
 

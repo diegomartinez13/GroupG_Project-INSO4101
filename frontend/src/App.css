@@ -48,27 +48,3 @@
   transition: width 0.2s ease-in-out;
 }
 
-.show-menu .side-navigation {
-  width: 200px;
-}
-
-.content-container {
-  margin-left: 80px;
-}
-
-.show-menu .content-container {
-  margin-left: 200px;
-}
-
-.app-container {
-  display: flex;
-  flex-direction: row;
-  height: 100vh;
-  overflow: hidden;
-}
-
-.content-container {
-  flex: 1;
-  overflow-y: scroll;
-  padding: 20px;
-}
