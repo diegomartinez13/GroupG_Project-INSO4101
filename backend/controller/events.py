@@ -101,6 +101,12 @@ class BaseEvents:
             result_list.append(result)
         return jsonify(result_list)
 
+    def insertEvent(self, name, description, location, start_datetime, end_datetime):
+        dao = EventDAO()
+        event_id = dao.insertEvent(name, description, location, start_datetime, end_datetime)
+        result = self.build_attr_dict(event_id, 'name', 'description', 'location', 0, False)
+        return jsonify(result), 201
+
     def updateNameByEvent(self, event_id, json):
         name = json['name']
         dao = EventDAO()

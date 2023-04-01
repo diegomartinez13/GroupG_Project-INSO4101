@@ -105,6 +105,32 @@ class EventDAO:
             result.append(row)
         return result
 
+    # def convertStartDateTimeToString(self, event_id):
+    #     cursor = self.conn.cursor()
+    #     query = "select TO_CHAR(start_datetime, 'YYYY/MM/DD HH:MM:SS') from events where event_id = %s;"
+    #     cursor.execute(query, (event_id,))
+    #     result = []
+    #     for row in cursor:
+    #         result.append(row)
+    #     return result
+    #
+    # def convertEndDateTimeToString(self, event_id):
+    #     cursor = self.conn.cursor()
+    #     query = "select TO_CHAR(end_datetime, 'YYYY/MM/DD HH:MM:SS') from events where event_id = %s;"
+    #     cursor.execute(query, (event_id,))
+    #     result = []
+    #     for row in cursor:
+    #         result.append(row)
+    #     return result
+    #
+    # def insertEvent(self, name, description, location, start_datetime, end_datetime):
+    #     cursor = self.conn.cursor()
+    #     query = "insert into Events (name, description, location, start_datetime, end_datetime) values (%s, %s, %s, %s, %s) returning event_id;"
+    #     cursor.execute(query, (name, description, location, start_datetime, end_datetime))
+    #     event_id = cursor.fetchone()[0]
+    #     self.conn.commit()
+    #     return event_id
+
     def updateNameByEvent(self, event_id, name):
         cursor = self.conn.cursor()
         query = 'update events set name = %s where event_id = %s;'

@@ -20,11 +20,11 @@ class BaseRecyclingCenters:
             result_list.append(result)
         return jsonify(result_list)
 
-    def getInformationByID(self,center_id):
+    def getInformationByID(self, center_id):
         dao = RecyclingCentersDAO()
         row = dao.getInformationById(center_id)
         if not row:
-            return jsonify("Event Not Found"), 404
+            return jsonify("User Not Found"), 404
         else:
             event = self.build_map_dict(row)
             return jsonify(event)
