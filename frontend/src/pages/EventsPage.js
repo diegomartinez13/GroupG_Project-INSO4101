@@ -8,7 +8,7 @@ function EventsPage() {
         <Grid item xs={12}>
           <EventsCalendar></EventsCalendar>
         </Grid>
-      </Grid>
+    </Grid>
     
     
   );
