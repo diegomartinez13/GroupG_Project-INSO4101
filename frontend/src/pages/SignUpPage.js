@@ -1,5 +1,5 @@
 import React from 'react';
-import { Button, TextField, Typography, FormGroup, FormControlLabel, Checkbox, Divider, Modal } from '@mui/material';
+import { Button, TextField, Typography, Divider } from '@mui/material';
 import { Box } from '@mui/system';
 
 
@@ -62,3 +62,7 @@ const SignUpPage = () => {
 }
 
 export default SignUpPage;
+/* Minor Details: 
+1. Add shadow behind Login Box (like the background shadow)
+2. Modify box to darker color (black?) when changed to dark mode
+*/
