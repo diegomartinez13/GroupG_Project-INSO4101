@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { NavLink, useLocation } from 'react-router-dom';
-import { styled, List, ListItem, ListItemIcon, ListItemText, BottomNavigation, BottomNavigationAction } from '@mui/material';
+import { styled, List, ListItem, ListItemIcon, ListItemText, BottomNavigation, BottomNavigationAction, useMediaQuery } from '@mui/material';
 import { IconButton } from '@mui/material';
 import { Menu, AccountCircle, HomeOutlined, EventOutlined, AccountCircleOutlined, ForumOutlined, Home, Event, PersonOutline, Forum, Person, Map, MapOutlined } from '@mui/icons-material';
 
@@ -101,9 +101,9 @@ function SideNavigation({ onToggleMenu }) {
     onToggleMenu();
   };
   
-  const isMobile = window.innerWidth < 900;
+  const isSmallScreen = useMediaQuery('(max-width:600px)');
 
-  if (isMobile) {
+  if (isSmallScreen) {
     return (
       <BottomNavWrapper>
         <BottomNavAction showLabel={true} label="Home" icon={location.pathname === '/' ? <Home /> : <HomeOutlined />} component={NavLink} to="/" />

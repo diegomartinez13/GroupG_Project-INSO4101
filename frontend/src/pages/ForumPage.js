@@ -1,11 +1,13 @@
 import React from 'react';
+import Forums from '../components/Forums';
+import { Grid } from '@mui/material';
+
 
 function ForumPage() {
   return (
-    <div>
-      <h1>Forum</h1>
-      <p>Join the discussion!</p>
-    </div>
+    <Grid container spacing={2} justifyContent="center">
+      <Forums></Forums>
+    </Grid>
   );
 }
 

@@ -9,8 +9,7 @@ import ForumPage from './pages/ForumPage';
 import LoginPage from './pages/LoginPage';
 import SignUpPage from './pages/SignUpPage';
 
-
-import { createTheme, ThemeProvider } from '@mui/material';
+import { createTheme, ThemeProvider, useMediaQuery } from '@mui/material';
 import ThemeToggle from './components/ThemeToggle';
 import { Typography, Box, Container } from '@mui/material';
 import logo from './assets/logo.jpg';
@@ -160,11 +159,13 @@ const dark_theme = createTheme({
   },
 });
 
-const isSmallScreen = window.innerWidth < 900;
+
 
 function App() {
   const [isOpen, setIsOpen] = useState(false);
   const [darkMode, setDarkMode] = useState(false);
+  const isSmallScreen = useMediaQuery('(max-width: 600px)');
+
   const toggleDarkMode = () => {
     setDarkMode(!darkMode);
   };
@@ -185,7 +186,7 @@ function App() {
           <Container maxWidth="xl" sx={{ padding: 0 }}>
             <Box sx={{ display: 'flex', flexDirection: 'column', height: '100vh' }}>
               <Box sx={{ display: 'flex', flexGrow: 1 }}>
-                  <Box sx={{ width: isSmallScreen? 0:'16em' }}>
+                  <Box sx={{ width: isSmallScreen? 0:'8em' }}>
                     <SideNavigation onToggleMenu={toggleMenu} />
                   </Box>
                 <Box sx={{ flexGrow: 1 }}>
