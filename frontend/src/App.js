@@ -6,6 +6,10 @@ import EventsPage from './pages/EventsPage';
 import RecyclingCentersPage from './pages/RecyclingCentersPage';
 import ProfilePage from './pages/ProfilePage';
 import ForumPage from './pages/ForumPage';
+import LoginPage from './pages/LoginPage';
+import SignUpPage from './pages/SignUpPage';
+
+
 import { createTheme, ThemeProvider } from '@mui/material';
 import ThemeToggle from './components/ThemeToggle';
 import { Typography, Box, Container } from '@mui/material';
@@ -199,6 +203,9 @@ function App() {
                       <Route path="/recycling-centers" element={<RecyclingCentersPage />} />
                       <Route path="/profile" element={<ProfilePage />} />
                       <Route path="/forum" element={<ForumPage />} />
+                      <Route path="/login" element={<LoginPage />} />
+                      <Route path="/signup" element={<SignUpPage />} />
+
                     </Routes>
                   </Box>
                 </Box>
