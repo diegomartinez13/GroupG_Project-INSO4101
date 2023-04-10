@@ -33,7 +33,7 @@ const HomePage = () => {
   ));
   return (
     <>
-    <Grid container spacing={2} justifyContent="center" sx ={{ mt : 8}}>
+    <Grid container spacing={2} justifyContent="center">
       <InfoCard >
         <CardMedia
           component="img"
