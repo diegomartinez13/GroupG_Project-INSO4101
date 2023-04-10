@@ -18,7 +18,9 @@ const SignUpPage = () => {
           border: '2px solid #000',
           boxShadow: 24,
           p:4,
-          alignContent: 'center'
+          alignContent: 'center',
+        //   backgroundColor: '#fcfcf9'
+          backgroundColor: '#ffffff'
           }} 
           >
 
