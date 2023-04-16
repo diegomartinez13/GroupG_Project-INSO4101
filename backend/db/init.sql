@@ -1,7 +1,7 @@
 create table Users (
 	user_id serial PRIMARY KEY,
 	username VARCHAR(50) NOT NULL UNIQUE,
-	password VARCHAR(50) NOT NULL,
+	password VARCHAR(100) NOT NULL,
 	reward_points INT NOT NULL DEFAULT 0,
 	target_goal_amount DECIMAL(5,2) NOT NULL DEFAULT 0,
 	target_goal_hours DECIMAL(5,2) NOT NULL DEFAULT 0,

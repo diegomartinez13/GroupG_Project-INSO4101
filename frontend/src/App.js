@@ -162,6 +162,7 @@ const dark_theme = createTheme({
 
 
 function App() {
+  const [userLoggedIn, setUserLoggedIn] = useState(sessionStorage.getItem('user') != null && sessionStorage.getItem('user') != undefined && sessionStorage.getItem('user') != 'undefined')
   const [isOpen, setIsOpen] = useState(false);
   const [darkMode, setDarkMode] = useState(false);
   const isSmallScreen = useMediaQuery('(max-width: 600px)');
@@ -202,7 +203,7 @@ function App() {
                       <Route path="/" element={<HomePage />} />
                       <Route path="/events" element={<EventsPage />} />
                       <Route path="/recycling-centers" element={<RecyclingCentersPage />} />
-                      <Route path="/profile" element={<ProfilePage />} />
+                      <Route path="/profile" element={userLoggedIn ? <ProfilePage /> : <LoginPage />} />
                       <Route path="/forum" element={<ForumPage />} />
                       <Route path="/login" element={<LoginPage />} />
                       <Route path="/signup" element={<SignUpPage />} />

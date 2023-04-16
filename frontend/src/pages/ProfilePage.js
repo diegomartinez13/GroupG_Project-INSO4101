@@ -1,5 +1,5 @@
 import { Button } from '@mui/material';
-import React from 'react';
+import React, {useState} from 'react';
 
 
 function ProfilePage() {
@@ -7,17 +7,14 @@ function ProfilePage() {
   return (
     <div>
       <h1>Profile</h1>
-      {/* if userLoggedIn == True */}
-          {/* Profile page */}
-
-      {/* if userLoggedIn == False */}
-      <Button variant="outlined" href="/signup">
-        Sign Up
+      <Button variant="outlined" onClick={() => {sessionStorage.clear(); window.location.href = '/login'}}
+      >
+        Sign Out
       </Button>
 
-      <Button variant="text" href="/login">
+      {/* <Button variant="text" href="/login">
         Login
-      </Button>
+      </Button> */}
 
     </div>
   );

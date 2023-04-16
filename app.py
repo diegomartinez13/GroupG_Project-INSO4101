@@ -30,11 +30,12 @@ def getEvents():
 @app.route("/login", methods=['POST', 'GET'])
 def login():
     if request.method == 'POST':
-        username = request.form.get('username')
-        password = request.form.get('password')
+        print(request.json)
+        username = request.json['username']
+        password = request.json['password']
         
         user = BaseUsers().getUserByUsername(username)
-        
+
         if user:
             if check_password_hash(user.json['password'], password):
                 return user
@@ -50,17 +51,19 @@ def login():
 @app.route("/register", methods=['POST', 'GET'])
 def register():
     if request.method == 'POST':
-        username = request.form['username']
-        password = request.form['password']
-        password_confirmation = request.form['password_confirmation']
+        username = request.json['username']
+        password = request.json['password']
+        password_confirmation = request.json['password_confirmation']
         
         if BaseUsers().checkUserExists(username):
             return jsonify(Error="User Already Exists"), 409
         elif password != password_confirmation:
             return jsonify(Error="Passwords do not match"), 401
         else:
-            new_user = BaseUsers().insertUser(username, generate_password_hash(password, method='sha256'), 0, 0, 0, False)
-            return jsonify(new_user), 201
+            print(generate_password_hash(password, method='sha256'))
+            result = BaseUsers().insertUser(username, generate_password_hash(password, method='sha256'), 0, 0, 0, False)
+            
+            return result
     elif request.method == 'GET':
         #TODO: Connect flask app to react app
         return {'message': 'Welcome to the registration page'}

@@ -37,7 +37,7 @@ class EventsCalendar extends Component {
           defaultDate={new Date()}
           defaultView="month"
           events={this.state.events}
-          style={{ height: "80vh" , alignContent: "center", alignItems: "center", justifyContent: "center"}}
+          style={{ height: "80vh" , alignContent: "center", alignItems: "center", justifyContent: "center", zIndex: 0}}
           
         />
     );
