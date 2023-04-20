@@ -3,7 +3,7 @@ from flask import jsonify
 from backend.model.has_reaction import HasReactionDAO
 
 
-class BaseUsers:
+class BaseHasReaction:
 
     def build_map_dict(self, row):
         result = {'user_id': row[0], 'post_id': row[1], 'is_liked': row[2],}
@@ -39,6 +39,15 @@ class BaseUsers:
         else:
             user = self.build_map_dict(row)
             return jsonify(user)
+
+    def insertHasReaction(self, json):
+        user_id = json['user_id']
+        post_id = json['post_id']
+        is_liked = json['is_liked']
+        dao = HasReactionDAO()
+        post_id = dao.insertHasReaction(user_id, post_id, is_liked)
+        result = self.build_attr_dict(user_id, post_id, is_liked)
+        return jsonify(result), 201
 
     def updateIsLikedByUser(self, user_id, json):
         is_liked = json['is_liked']

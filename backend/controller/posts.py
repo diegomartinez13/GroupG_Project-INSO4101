@@ -68,6 +68,17 @@ class BasePosts:
             post = self.build_map_dict(row)
         return jsonify(post)
 
+    def insertPost(self, json):
+        tittle = json['tittle']
+        content = json['content']
+        created_at = json['created_at']
+        parent_post_id = json['parent_post_id']
+        user_id = json['user_id']
+        dao = PostsDAO()
+        post_id = dao.insertPost(tittle, content, created_at, parent_post_id, user_id)
+        result = self.build_attr_dict(post_id, tittle, content, created_at, parent_post_id, user_id)
+        return jsonify(result), 201
+
     def updatePost(self, post_id, json):
         tittle = json['tittle']
         content = json['content']
@@ -88,7 +99,9 @@ class BasePosts:
         tittle = json['tittle']
         dao = PostsDAO()
         if tittle != '':
-            dao.updateTittleByPostId(post_id)
+            result = dao.updateTittleByPostId(post_id)
+            if result == 0:
+                return jsonify("post_id not found")
         else:
             return jsonify('Error, we can not change tittle to \'\'')
         return jsonify('tittle Updated'), 200
@@ -97,7 +110,9 @@ class BasePosts:
         content = json['content']
         dao = PostsDAO()
         if content != '':
-            dao.updateContentByPostId(post_id)
+            result = dao.updateContentByPostId(post_id)
+            if result == 0:
+                return jsonify("post_id not found")
         else:
             return jsonify('Error, we can not change content to \'\'')
         return jsonify('content Updated'), 200
@@ -106,7 +121,9 @@ class BasePosts:
         parent_post_id = json['parent_post_id']
         dao = PostsDAO()
         if parent_post_id != '':
-            dao.updateParentIdPostByPostId(post_id)
+            result = dao.updateParentIdPostByPostId(post_id)
+            if result == 0:
+                return jsonify("post_id not found")
         else:
             return jsonify('Error, we can not change parent post id to \'\'')
         return jsonify('parent post id Updated'), 200

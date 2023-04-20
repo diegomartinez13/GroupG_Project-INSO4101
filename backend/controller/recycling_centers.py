@@ -15,6 +15,8 @@ class BaseRecyclingCenters:
         dao = RecyclingCentersDAO()
         event_list = dao.getAllRecyclingCenters()
         result_list = []
+        if len(event_list) == 0:
+            return jsonify("no Recycling Centers yet")
         for row in event_list:
             result = self.build_map_dict(row)
             result_list.append(result)
@@ -38,7 +40,7 @@ class BaseRecyclingCenters:
             event = self.build_map_dict(row)
             return jsonify(event)
 
-    def getcoordinatesByID(self, center_id):
+    def getCoordinatesByID(self, center_id):
         dao = RecyclingCentersDAO()
         row = dao.getCoordinatesById(center_id)
         if not row:
@@ -46,6 +48,15 @@ class BaseRecyclingCenters:
         else:
             event = self.build_map_dict(row)
             return jsonify(event)
+
+    def insertRecyclingCenters(self, json):
+        information = json['information']
+        location = json['location']
+        coordinates = json['coordinates']
+        dao = RecyclingCentersDAO()
+        center_id = dao.insertRecyclingCenters(information, location, coordinates)
+        result = self.build_attr_dict(center_id, information, location, coordinates)
+        return jsonify(result), 201
 
     def updateRecycleCenters(self, center_id, json):
         information = json['information']
@@ -62,11 +73,13 @@ class BaseRecyclingCenters:
         result = self.build_attr_dict(center_id, information, location, coordinates)
         return jsonify(result), 200
 
-    def updateInformationById(self ,center_id, json):
+    def updateInformationById(self, center_id, json):
         information = json['information']
         dao = RecyclingCentersDAO()
         if information != '':
-            dao.updateInformationById(information, center_id)
+            result = dao.updateInformationById(information, center_id)
+            if result == 0:
+                return jsonify("center_id not found")
         else:
             return jsonify('Error, we can not change information to \'\'')
         return jsonify('Information Updated')
@@ -75,7 +88,9 @@ class BaseRecyclingCenters:
         location = json['location']
         dao = RecyclingCentersDAO()
         if location != '':
-            dao.updateLocationById(location, center_id)
+            result = dao.updateLocationById(location, center_id)
+            if result == 0:
+                return jsonify("center_id not found")
         else:
             return jsonify('Error, we can not change location to \'\'')
         return jsonify('Location Updated')
@@ -84,7 +99,9 @@ class BaseRecyclingCenters:
         coordinates = json['coordinates']
         dao = RecyclingCentersDAO()
         if coordinates != '':
-            dao.updateCoordinatesById(coordinates, center_id)
+            result = dao.updateCoordinatesById(coordinates, center_id)
+            if result == 0:
+                return jsonify("center_id not found")
         else:
             return jsonify('Error, we can not change coordinates to \'\'')
         return jsonify('coordinates Updated')

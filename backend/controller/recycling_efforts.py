@@ -29,6 +29,15 @@ class BaseRecyclingEfforts:
             recyclingEffort = self.build_map_dict(row)
             return jsonify(recyclingEffort)
 
+    def getAllRecyclingHoursByUser(self, user_id):
+        dao = RecyclingEffortsDAO()
+        row = dao.getAllRecyclingHoursByUser(user_id)
+        if not row:
+            return jsonify("User or date not found"), 404
+        else:
+            recyclingEffort = self.build_map_dict(row)
+            return jsonify(recyclingEffort)
+
     def getRecyclingHoursByUserByDate(self, user_id, recycling_date):
         dao = RecyclingEffortsDAO()
         row = dao.getRecyclingHoursByUserByDate(user_id, recycling_date)
@@ -80,10 +89,20 @@ class BaseRecyclingEfforts:
         result_list = []
         for row in recyclingDates_list:
             result = self.build_map_dict(row)
-            recyclingDates_list.append(result)
-        return jsonify(recyclingDates_list)
+            result_list.append(result)
+        return jsonify(result_list)
 
-    def updateRecyclingHours(self, effort_id, json):
+    def insertRecyclingEfforts(self, json):
+        recycling_hours = json['recycling_hours']
+        amount_recycled = json['amount_recycled']
+        recycling_date = json['recycling_date']
+        user_id = json['user_id']
+        dao = RecyclingEffortsDAO()
+        effort_id = dao.insertRecyclingEfforts(recycling_hours, amount_recycled, recycling_date, user_id)
+        result = self.build_attr_dict(effort_id,recycling_hours, amount_recycled, recycling_date, user_id)
+        return jsonify(result), 201
+
+    def updateRecyclingEfforts(self, effort_id, json):
         recycling_hours = json['recycling_hours']
         amount_recycled = json['amount_recycled']
         recycling_date = json['recycling_date']
@@ -98,12 +117,13 @@ class BaseRecyclingEfforts:
         result = self.build_attr_dict(effort_id, recycling_hours, amount_recycled, recycling_date, user_id)
         return jsonify(result), 200
 
-    def updateRecyclingHoursById(self, json):
-        effort_id = json['effort_id']
+    def updateRecyclingHoursById(self, effort_id, json):
         recycling_hours = json['recycling_hours']
         dao = RecyclingEffortsDAO()
         if recycling_hours != '':
-            dao.updateRecyclingHoursById(effort_id, recycling_hours)
+            result = dao.updateRecyclingHoursById(effort_id, recycling_hours)
+            if result == 0:
+                return jsonify("effort_id not found")
         else:
             return jsonify('Error, we can not change recycling hours to \'\'')
 
@@ -113,23 +133,27 @@ class BaseRecyclingEfforts:
         amount_recycled = json['amount_recycled']
         dao = RecyclingEffortsDAO()
         if amount_recycled != '':
-            dao.updateAmountRecycledById(effort_id, amount_recycled)
+            result = dao.updateAmountRecycledById(effort_id, amount_recycled)
+            if result == 0:
+                return jsonify("effort_id not found")
         else:
             return jsonify('Error, we can not change amount recycled to \'\'')
         return jsonify('Information Updated'), 200
 
-    def RecyclingDateById(self, effort_id, json):
+    def updateRecyclingDateById(self, effort_id, json):
         recycling_date = json['recycling_date']
         dao = RecyclingEffortsDAO()
         if recycling_date != '':
-            dao.updateRecyclingDateById(effort_id, recycling_date)
+            result = dao.updateRecyclingDateById(effort_id, recycling_date)
+            if result == 0:
+                return jsonify("effort_id not found")
         else:
             return jsonify('Error, we can not change recycling date to \'\'')
         return jsonify('Information Updated'), 200
 
-    def deleteRecyclingEffort(self, effort_id):
+    def deleteRecyclingEfforts(self, effort_id):
         dao = RecyclingEffortsDAO()
-        result = dao.deleteRecyclingEffort(effort_id)
+        result = dao.deleteRecyclingEfforts(effort_id)
         if result:
             return jsonify("DELETED"), 200
         else:

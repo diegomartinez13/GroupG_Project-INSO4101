@@ -36,6 +36,14 @@ class HasReactionDAO:
             result.append(row)
         return result
 
+    def insertHasReaction(self, user_id, post_id, is_liked):
+        cursor = self.conn.cursor()
+        query ="insert into HasReaction(user_id, post_id, is_liked) values (%s, %s, %s) returning post_id ;"
+        cursor.execute(query, (user_id, post_id, is_liked,))
+        post_id = cursor.fetchone()[1]
+        self.conn.commit()
+        return post_id
+
     def updateIsLikedByUser(self, user_id, is_liked):
         cursor = self.conn.cursor()
         query = 'update Hasreaction set is_liked = %s where user_id = %s;'

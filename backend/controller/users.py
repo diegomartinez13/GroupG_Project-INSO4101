@@ -40,7 +40,7 @@ class BaseUsers:
             user = self.build_map_dict(row)
             return jsonify(user)
 
-    def getUsernameById(self,user_id):
+    def getUsernameById(self, user_id):
         dao = UserDAO()
         row = dao.getUsernameById(user_id)
         if not row:

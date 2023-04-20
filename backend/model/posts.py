@@ -51,24 +51,44 @@ class PostsDAO:
         result = cursor.fethone()
         return result
 
+    def insertPost(self, tittle, content, created_at, parent_post_id, user_id):
+        cursor = self.conn.cursor()
+        query = "insert into Posts(tittle, content, cretaed_at, parent_post_id, user_id) values (%s, %s, %s, %s, %s) returning post_id ;"
+        cursor.execute(query, (tittle, content, created_at, parent_post_id, user_id))
+        post_id = cursor.fetchone()[0]
+        self.conn.commit()
+        return post_id
+
     def updateTittleByPostId(self, post_id):
         cursor = self.conn.cursor()
         query = 'update posts set tittle = %s where post_id = %s;'
-        cursor.execute(query, (post_id,))
+        try:
+            cursor.execute(query, (post_id,))
+        except psycopg2.IntegrityError:
+            self.conn.rollback()
+            return 0
         self.conn.commit()
         return post_id
 
     def updateContentByPostId(self, post_id):
         cursor = self.conn.cursor()
         query = 'update posts set content = %s where post_id = %s;'
-        cursor.execute(query, (post_id,))
+        try:
+            cursor.execute(query, (post_id,))
+        except psycopg2.IntegrityError:
+            self.conn.rollback()
+            return 0
         self.conn.commit()
         return post_id
 
     def updateParentIdPostByPostId(self, post_id):
         cursor = self.conn.cursor()
         query = 'update posts set parent_post_id = %s where post_id = %s;'
-        cursor.execute(query, (post_id,))
+        try:
+            cursor.execute(query, (post_id,))
+        except psycopg2.IntegrityError:
+            self.conn.rollback()
+            return 0
         self.conn.commit()
         return post_id
 
