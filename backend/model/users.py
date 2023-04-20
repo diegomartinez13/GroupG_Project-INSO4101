@@ -37,10 +37,31 @@ class UserDAO:
         result = cursor.fetchone()
         return result
 
+    def getIdByUsername(self, username):
+        cursor = self.conn.cursor()
+        query = 'select user_id from users where username = %s;'
+        cursor.execute(query, (username,))
+        result = cursor.fetchone()
+        return result
+
+    def getPasswordById(self, user_id):
+        cursor = self.conn.cursor()
+        query = "select password from users where user_id = %s;"
+        cursor.execute(query, (user_id,))
+        result = cursor.fetchone()
+        return result
+
     def getPasswordByUsername(self, username):
         cursor = self.conn.cursor()
         query = "select password from users where username = %s;"
         cursor.execute(query, (username,))
+        result = cursor.fetchone()
+        return result
+
+    def getRewardsPointsById(self, user_id):
+        cursor = self.conn.cursor()
+        query = "select reward_points from users where user_id = %s;"
+        cursor.execute(query, (user_id,))
         result = cursor.fetchone()
         return result
 
@@ -51,6 +72,13 @@ class UserDAO:
         result = cursor.fetchone()
         return result
 
+    def getTargetGoalAmountById(self, user_id):
+        cursor = self.conn.cursor()
+        query = "select target_goal_amount from users where user_id = %s;"
+        cursor.execute(query, (user_id,))
+        result = cursor.fetchone()
+        return result
+
     def getTargetGoalAmountByUsername(self, username):
         cursor = self.conn.cursor()
         query = "select target_goal_amount from users where username = %s;"
@@ -58,10 +86,24 @@ class UserDAO:
         result = cursor.fetchone()
         return result
 
+    def getTargetGoalHoursById(self, user_id):
+        cursor = self.conn.cursor()
+        query = "select target_goal_hours from users where user_id = %s;"
+        cursor.execute(query, (user_id,))
+        result = cursor.fetchone()
+        return result
+
     def getTargetGoalHoursByUsername(self, username):
         cursor = self.conn.cursor()
         query = "select target_goal_hours from users where username = %s;"
         cursor.execute(query, (username,))
+        result = cursor.fetchone()
+        return result
+
+    def getIsAdminById(self, user_id):
+        cursor = self.conn.cursor()
+        query = "select is_admin from users where user_id = %s;"
+        cursor.execute(query, (user_id,))
         result = cursor.fetchone()
         return result
 

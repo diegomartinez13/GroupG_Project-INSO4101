@@ -102,7 +102,120 @@ def handleUsersByID(user_id):
         return jsonify('Method not Allowed'), 405
 
 
+@app.route("/user/<username>", methods=['GET'])
+def getUserByUsername(username):
+    if request.method == 'GET':
+        return BaseUsers().getUserByUsername(str(username))
+    else:
+        jsonify("Method Not Allowed"), 405
 
+
+@app.route("/user/username/<int:user_id>", methods=['GET', 'POST'])
+def handleUserUsernameById(user_id):
+    if request.method == 'GET':
+        return BaseUsers().getUsernameById(user_id)
+    elif request.method == 'POST':
+        return BaseUsers().updateUserUsername(user_id, request.json)
+    else:
+        jsonify("Method Not Allowed"), 405
+
+
+@app.route("/user/id/<username>", methods=['GET'])
+def getUsersIdByUsername(username):
+    if request.method == 'GET':
+        return BaseUsers().getIdByUsername(str(username))
+    else:
+        jsonify("Method Not Allowed"), 405
+
+
+@app.route("user/password/<int:user_id>", methods=['GET', 'POST'])
+def handleUserPasswordById(user_id):
+    if request.method == 'GET':
+        return BaseUsers().getPasswordById(user_id)
+    elif request.method == 'POST':
+        return BaseUsers().updateUserPassword(user_id, request.json)
+    else:
+        jsonify("Method Not Allowed"), 405
+
+
+@app.route("/user/password/<username>", methods=['GET'])
+def getUserPasswordsByUsername(username):
+    if request.method == 'GET':
+        return BaseUsers().getPasswordByUsername(str(username))
+    else:
+        jsonify("Method Not Allowed"), 405
+
+
+@app.route("user/reward_points/<int:user_id>", methods=['GET', 'POST'])
+def handleUserRewardPointsById(user_id):
+    if request.method == 'GET':
+        return BaseUsers().getRewardsPointsById(user_id)
+    elif request.method == 'POST':
+        return BaseUsers().updateUserRewardPoints(user_id, request.json)
+    else:
+        jsonify("Method Not Allowed"), 405
+
+
+@app.route("/user/reward_points/<username>", methods=['GET'])
+def getUserRewardPointsByUsername(username):
+    if request.method == 'GET':
+        return BaseUsers().getRewardsPointsByUsername(str(username))
+    else:
+        jsonify("Method Not Allowed"), 405
+
+
+@app.route("user/target_goal_amount/<int:user_id>", methods=['GET', 'POST'])
+def handleUserTargetGoalAmountById(user_id):
+    if request.method == 'GET':
+        return BaseUsers().getTargetGoalAmountById(user_id)
+    elif request.method == 'POST':
+        return BaseUsers().updateUserTargetGoalAmount(user_id, request.json)
+    else:
+        jsonify("Method Not Allowed"), 405
+
+
+@app.route("/user/target_goal_amount/<username>", methods=['GET'])
+def getUserTargetGoalAmountByUsername(username):
+    if request.method == 'GET':
+        return BaseUsers().getTargetGoalAmountByUsername(str(username))
+    else:
+        jsonify("Method Not Allowed"), 405
+
+
+@app.route("user/target_goal_hours/<int:user_id>", methods=['GET', 'POST'])
+def handleUserTargetGoalHoursById(user_id):
+    if request.method == 'GET':
+        return BaseUsers().getTargetGoalHoursById(user_id)
+    elif request.method == 'POST':
+        return BaseUsers().updateUserTargetGoalHours(user_id, request.json)
+    else:
+        jsonify("Method Not Allowed"), 405
+
+
+@app.route("/user/target_goal_amount/<username>", methods=['GET'])
+def getUserTargetGoalHoursByUsername(username):
+    if request.method == 'GET':
+        return BaseUsers().getTargetGoalHoursByUsername(str(username))
+    else:
+        jsonify("Method Not Allowed"), 405
+
+
+@app.route("user/is_admin/<int:user_id>", methods=['GET', 'POST'])
+def handleUserIsAdminById(user_id):
+    if request.method == 'GET':
+        return BaseUsers().getIsAdminById(user_id)
+    elif request.method == 'POST':
+        return BaseUsers().updateUserIsAdmin(user_id, request.json)
+    else:
+        jsonify("Method Not Allowed"), 405
+
+
+@app.route("/user/is_admin/<username>", methods=['GET'])
+def getUserIsAdminByUsername(username):
+    if request.method == 'GET':
+        return BaseUsers().getIsAdminByUsername(str(username))
+    else:
+        jsonify("Method Not Allowed"), 405
 
 # ------------------- EVENTS ROUTES ---------------------
 @app.route("/events", methods=['GET', 'POST'])

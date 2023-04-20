@@ -49,9 +49,36 @@ class BaseUsers:
             user = self.build_map_dict(row)
             return jsonify(user)
 
+    def getIdByUsername(self, username):
+        dao = UserDAO()
+        row = dao.getIdByUsername(username)
+        if not row:
+            return jsonify("User Not Found"), 404
+        else:
+            user = self.build_map_dict(row)
+            return jsonify(user)
+
+    def getPasswordById(self, user_id):
+        dao = UserDAO()
+        row = dao.getPasswordById(user_id)
+        if not row:
+            return jsonify("User Not Found"), 404
+        else:
+            user = self.build_map_dict(row)
+            return jsonify(user)
+
     def getPasswordByUsername(self, username):
         dao = UserDAO()
         row = dao.getPasswordByUsername(username)
+        if not row:
+            return jsonify("User Not Found"), 404
+        else:
+            user = self.build_map_dict(row)
+            return jsonify(user)
+
+    def getRewardsPointsById(self, user_id):
+        dao = UserDAO()
+        row = dao.getRewardsPointsById(user_id)
         if not row:
             return jsonify("User Not Found"), 404
         else:
@@ -67,6 +94,15 @@ class BaseUsers:
             user = self.build_map_dict(row)
             return jsonify(user)
 
+    def getTargetGoalAmountById(self, user_id):
+        dao = UserDAO()
+        row = dao.getTargetGoalAmountById(user_id)
+        if not row:
+            return jsonify("User Not Found"), 404
+        else:
+            user = self.build_map_dict(row)
+            return jsonify(user)
+
     def getTargetGoalAmountByUsername(self, username):
         dao = UserDAO()
         row = dao.getTargetGoalAmountByUsername(username)
@@ -76,9 +112,27 @@ class BaseUsers:
             user = self.build_map_dict(row)
             return jsonify(user)
 
+    def getTargetGoalHoursById(self, user_id):
+        dao = UserDAO()
+        row = dao.getTargetGoalAmountById(user_id)
+        if not row:
+            return jsonify("User Not Found"), 404
+        else:
+            user = self.build_map_dict(row)
+            return jsonify(user)
+
     def getTargetGoalHoursByUsername(self, username):
         dao = UserDAO()
         row = dao.getTargetGoalAmountByUsername(username)
+        if not row:
+            return jsonify("User Not Found"), 404
+        else:
+            user = self.build_map_dict(row)
+            return jsonify(user)
+
+    def getIsAdminById(self, user_id):
+        dao = UserDAO()
+        row = dao.getIsAdminById(user_id)
         if not row:
             return jsonify("User Not Found"), 404
         else:
