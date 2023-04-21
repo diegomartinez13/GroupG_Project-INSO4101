@@ -9,6 +9,26 @@ class BasePosts:
                   'parent_post_id': row[4], 'user_id': row[5], 'is_admin': row[6]}
         return result
 
+    def build_map_dict_tittle(self, row):
+        result = {'title': row[0]}
+        return result
+
+    def build_map_dict_content(self, row):
+        result = {'content': row[0]}
+        return result
+
+    def build_map_dict_created_at(self, row):
+        result = {'created_at': row[0]}
+        return result
+
+    def build_map_dict_parent_post_id(self, row):
+        result = {'parent_post_id': row[0]}
+        return result
+
+    def build_map_dict_user_id(self, row):
+        result = {'user_id': row[0]}
+        return result
+
     def build_attr_dict(self, post_id, title, content, created_at, parent_post_id, user_id):
         result = {'post_id': post_id, 'title': title, 'content': content,
                   'created_at': created_at, 'parent_post_id': parent_post_id, 'user_id': user_id}
@@ -29,7 +49,7 @@ class BasePosts:
         if not row:
             return jsonify("post not found"), 404
         else:
-            post = self.build_map_dict(row)
+            post = self.build_map_dict_tittle(row)
         return jsonify(post)
 
     def getContentByPostId(self, post_id):
@@ -38,7 +58,7 @@ class BasePosts:
         if not row:
             return jsonify("post not found"), 404
         else:
-            post = self.build_map_dict(row)
+            post = self.build_map_dict_content(row)
         return jsonify(post)
 
     def getCreatedAtByPostId(self, post_id):
@@ -47,7 +67,7 @@ class BasePosts:
         if not row:
             return jsonify("post not found"), 404
         else:
-            post = self.build_map_dict(row)
+            post = self.build_map_dict_created_at(row)
         return jsonify(post)
 
     def getParentPostIdByPostId(self, post_id):
@@ -56,7 +76,7 @@ class BasePosts:
         if not row:
             return jsonify("post not found"), 404
         else:
-            post = self.build_map_dict(row)
+            post = self.build_map_dict_parent_post_id(row)
         return jsonify(post)
 
     def getUserIdByPostId(self, post_id):
@@ -65,7 +85,7 @@ class BasePosts:
         if not row:
             return jsonify("post not found"), 404
         else:
-            post = self.build_map_dict(row)
+            post = self.build_map_dict_user_id(row)
         return jsonify(post)
 
     def insertPost(self, json):

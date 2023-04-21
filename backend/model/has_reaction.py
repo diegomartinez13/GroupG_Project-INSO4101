@@ -9,7 +9,7 @@ class HasReactionDAO:
         pg_config['dbname'], pg_config['user'], pg_config['password'], pg_config['host'], pg_config['port'])
         self.conn = psycopg2._connect(connection_url)
 
-    def getAllHasRecation(self):
+    def getAllHasReaction(self):
         cursor = self.conn.cursor()
         query = 'select * from HasReaction;'
         cursor.execute(query)

@@ -217,6 +217,64 @@ def getUserIsAdminByUsername(username):
     else:
         jsonify("Method Not Allowed"), 405
 
+
+#  STATISTICAL ROUTES
+@app.route("/user/statistics/top5userswithmostrewardpoints", methods=['GET'])
+def getTop5UsersWithMostRewardPoints():
+    if request.method == 'GET':
+        return BaseUsers().getTop5UsersWithMostRewardPoints()
+    else:
+        return jsonify("Method Not Allowed"), 405
+
+
+@app.route("/user/statistics/top5userswithmosttargetgoalamount", methods=['GET'])
+def getTop5UsersWithMostTargetGoalAmount():
+    if request.method == 'GET':
+        return BaseUsers().getTop5UsersWithMostTargetGoalAmount()
+    else:
+        return jsonify("Method Not Allowed"), 405
+
+
+@app.route("/user/statistics/top5userswithmosttargetgoalhours", methods=['GET'])
+def getTop5UsersWithMostTargetGoalHours():
+    if request.method == 'GET':
+        return BaseUsers().getTop5UsersWithMostTargetGoalHours()
+    else:
+        return jsonify("Method Not Allowed"), 405
+
+
+@app.route("/user/statistics/top5userswithmostrecyclinghours", methods=['GET'])
+def getTop5UsersWithMostRecyclingHours():
+    if request.method == 'GET':
+        return BaseUsers().getTop5UsersWithMostRecyclingHours()
+    else:
+        return jsonify("Method Not Allowed"), 405
+
+
+@app.route("/user/statistics/top5userswithmostposts", methods=['GET'])
+def getTop5UsersWithMostPosts():
+    if request.method == 'GET':
+        return BaseUsers().getTop5UsersWithMostPosts()
+    else:
+        return jsonify("Method Not Allowed"), 405
+
+
+@app.route("/user/statistics/top5userswithmostreactions", methods=['GET'])
+def getTop5UsersWithMostReactions():
+    if request.method == 'GET':
+        return BaseUsers().getTop5UsersWithMostReactions()
+    else:
+        return jsonify("Method Not Allowed"), 405
+
+
+@app.route("/user/statistics/top5locationswithmostevents", methods=['GET'])
+def getTop5LocationsWithMostEvents():
+    if request.method == 'GET':
+        return BaseUsers().getTop5LocationsWithMostEvents()
+    else:
+        return jsonify("Method Not Allowed"), 405
+
+
 # ------------------- EVENTS ROUTES ---------------------
 @app.route("/events", methods=['GET', 'POST'])
 def handleEvents():
@@ -575,6 +633,7 @@ def handleHasReactionByUserIdByPost(user_id, post_id):
         return BaseHasReaction().deleteHasReaction(user_id, post_id)
     else:
         return jsonify('Method Not Allowed'), 405
+
 
 
 if __name__ == "__main__":

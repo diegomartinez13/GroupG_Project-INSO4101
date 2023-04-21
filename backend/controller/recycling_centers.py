@@ -7,6 +7,19 @@ class BaseRecyclingCenters:
         result = {'center_id': row[0], 'information': row[1], 'location': row[2], 'coordinates': row[3]}
         return result
 
+    def build_map_dict_information(self, row):
+        result = {'information': row[0]}
+        return result
+
+    def build_map_dict_location(self, row):
+        result = {'location': row[0]}
+        return result
+
+    def build_map_dict_coordinates(self, row):
+        result = {'coordinates': row[0]}
+        return result
+
+
     def build_attr_dict(self, center_id, information, location, coordinates):
         result = {'center_id': center_id, 'information': information, 'location': location, 'coordinates': coordinates}
         return result
@@ -28,7 +41,7 @@ class BaseRecyclingCenters:
         if not row:
             return jsonify("User Not Found"), 404
         else:
-            event = self.build_map_dict(row)
+            event = self.build_map_dict_information(row)
             return jsonify(event)
 
     def getLocationByID(self, center_id):
@@ -37,7 +50,7 @@ class BaseRecyclingCenters:
         if not row:
             return jsonify("Event Not Found"), 404
         else:
-            event = self.build_map_dict(row)
+            event = self.build_map_dict_location(row)
             return jsonify(event)
 
     def getCoordinatesByID(self, center_id):
@@ -46,7 +59,7 @@ class BaseRecyclingCenters:
         if not row:
             return jsonify("Event Not Found"), 404
         else:
-            event = self.build_map_dict(row)
+            event = self.build_map_dict_coordinates(row)
             return jsonify(event)
 
     def insertRecyclingCenters(self, json):

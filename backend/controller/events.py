@@ -7,6 +7,26 @@ class BaseEvents:
         result = {'event_id': row[0], 'name': row[1], 'description': row[2], 'location': row[3], 'start_datetime': row[4], 'end_datetime': row[5]}
         return result
 
+    def build_map_dict_name(self, row):
+        result = {'name': row[0]}
+        return result
+
+    def build_map_dict_description(self, row):
+        result = {'description': row[0]}
+        return result
+
+    def build_map_dict_location(self, row):
+        result = {'location': row[0]}
+        return result
+
+    def build_map_dict_start_datetime(self, row):
+        result = {'start_datetime': row[0]}
+        return result
+
+    def build_map_dict_end_datetime(self, row):
+        result = {'end_datetime': row[0]}
+        return result
+
     def build_attr_dict(self, event_id, name, description, location, start_datetime, end_datetime):
         result = {'event_id': event_id, 'name': name, 'description': description, 'location': location, 'start_datetime': start_datetime, 'end_datetime': end_datetime}
         return result
@@ -58,7 +78,7 @@ class BaseEvents:
             return jsonify('Name not found')
         else:
             for row in event_list:
-                result = self.build_map_dict(row)
+                result = self.build_map_dict_description(row)
                 result_list.append(result)
             return jsonify(result_list)
 
@@ -70,7 +90,7 @@ class BaseEvents:
             return jsonify('Name not found')
         else:
             for row in event_list:
-                result = self.build_map_dict(row)
+                result = self.build_map_dict_location(row)
                 result_list.append(result)
             return jsonify(result_list)
 
@@ -82,7 +102,7 @@ class BaseEvents:
             return jsonify('Name not found')
         else:
             for row in event_list:
-                result = self.build_map_dict(row)
+                result = self.build_map_dict_start_datetime(row)
                 result_list.append(result)
             return jsonify(result_list)
 
@@ -91,7 +111,7 @@ class BaseEvents:
         event_list = dao.getNameByLocation(location)
         result_list = []
         for row in event_list:
-            result = self.build_map_dict(row)
+            result = self.build_map_dict_name(row)
             result_list.append(result)
         return jsonify(result_list)
 
@@ -100,7 +120,7 @@ class BaseEvents:
         event_list = dao.getNameByStartDateTime(start_datetime)
         result_list = []
         for row in event_list:
-            result = self.build_map_dict(row)
+            result = self.build_map_dict_name(row)
             result_list.append(result)
         return jsonify(result_list)
 
@@ -109,7 +129,7 @@ class BaseEvents:
         event_list = dao.getNameByEndDateTime(end_datetime)
         result_list = []
         for row in event_list:
-            result = self.build_map_dict(row)
+            result = self.build_map_dict_name(row)
             result_list.append(result)
         return jsonify(result_list)
 

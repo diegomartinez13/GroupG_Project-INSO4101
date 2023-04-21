@@ -177,3 +177,108 @@ class UserDAO:
         cursor.execute(query, (user_id,))
         self.conn.commit()
         return user_id
+
+    # Statistical Queries
+
+    def getTop5UsersWithMostRewardPoints(self):
+        cursor = self.conn.cursor()
+        query = 'Select username, rewar_points ' \
+                'from users ' \
+                'order by reward_points desc ' \
+                'limit 5;'
+        cursor.execute(query,)
+        result = []
+        for row in cursor:
+            result.append(row)
+        return result
+
+    def getTop5UsersWithMostTargetGoalAmount(self):
+        cursor = self.conn.cursor()
+        query = 'Select username, target_goal_amount ' \
+                'from users ' \
+                'order by target_goal_amount desc ' \
+                'limit 5;'
+        cursor.execute(query, )
+        result = []
+        for row in cursor:
+            result.append(row)
+        return result
+
+    def getTop5UsersWithMostTargetGoalHours(self):
+        cursor = self.conn.cursor()
+        query = 'Select username, target_goal_hours ' \
+                'from users ' \
+                'order by target_goal_hours desc ' \
+                'limit 5;'
+        cursor.execute(query, )
+        result = []
+        for row in cursor:
+            result.append(row)
+        return result
+
+    def getTop5UsersWithMostRecyclingHours(self):
+        cursor = self.conn.cursor()
+        query = 'select username, recycling_hours ' \
+                'from users natural inner join RecyclingEfforts ' \
+                'order by recycling_hours desc ' \
+                'limit 5;'
+        cursor.execute(query, )
+        result = []
+        for row in cursor:
+            result.append(row)
+        return result
+
+    def getTop5UsersWithMostAmountRecycled(self):
+        cursor = self.conn.cursor()
+        query = 'select username, amount_recycled ' \
+                'from users natural inner join RecyclingEfforts ' \
+                'order by amount_recycled desc ' \
+                'limit 5;'
+        cursor.execute(query, )
+        result = []
+        for row in cursor:
+            result.append(row)
+        return result
+
+    def getTop5UsersWithMostPosts(self):
+        cursor = self.conn.cursor()
+        query = 'select username, count(*) as counter ' \
+                'from users natural inner join Posts ' \
+                'group by username ' \
+                'order by counter desc ' \
+                'limit 5'
+        cursor.execute(query, )
+        result = []
+        for row in cursor:
+            result.append(row)
+        return result
+
+    def getTop5UsersWithMostReactions(self):
+        cursor = self.conn.cursor()
+        query = 'select username, count(*) counter ' \
+                'from users natural inner join HasReaction ' \
+                'where is_liked = true ' \
+                'group by username ' \
+                'order by counter desc ' \
+                'limit 5;'
+        cursor.execute(query, )
+        result = []
+        for row in cursor:
+            result.append(row)
+        return result
+
+    def getTop5LocationsWithMostEvents(self):
+        cursor = self.conn.cursor()
+        query = 'select location, count(*) counter ' \
+                'from Events ' \
+                'group by location ' \
+                'order by counter desc ' \
+                'limit 5;'
+        cursor.execute(query, )
+        result = []
+        for row in cursor:
+            result.append(row)
+        return result
+
+
+

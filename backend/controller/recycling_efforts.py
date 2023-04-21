@@ -7,6 +7,31 @@ class BaseRecyclingEfforts:
         result = {'effort_id': row[0], 'recycling_hours': row[1], 'amount_recycled': row[2], 'recycling_date': row[3], 'user_id': row[4]}
         return result
 
+    def build_map_dict_recycling_efforts_users(self, row):
+        result = {'recycling_hours': row[0], 'amount_recycled': row[1], 'recycling_date': row[2]}
+        return result
+
+    def build_map_dict_all_recycling_hours(self, row):
+        result = {'recycling_hours': row[0]}
+        return result
+
+    def build_map_dict_recycling_hours_by_dates(self, row):
+        result = {'recycling_hours': row[0], 'recycling_date': row[1]}
+        return result
+
+    def build_map_dict_amount_recycle(self, row):
+        result = {'amount_recycle': row[0]}
+        return result
+
+    def build_map_dict_amount_recycled_by_dates(self, row):
+        result = {'amount_recycled': row[0], 'recycling_date': row[1]}
+        return result
+
+    def build_map_dict_recycling_dates_by_user(self, row):
+        result = {'recycling_date': row[0]}
+        return result
+
+
     def build_attr_dict(self, effort_id, recycling_hours, amount_recycled, recycling_date, user_id):
         result = {'effort_id': effort_id, 'recycling_hours': recycling_hours, 'amount_recycled': amount_recycled, 'recycling_date': recycling_date, 'user_id': user_id}
         return result
@@ -26,7 +51,7 @@ class BaseRecyclingEfforts:
         if not row:
             return jsonify("User or date not found"), 404
         else:
-            recyclingEffort = self.build_map_dict(row)
+            recyclingEffort = self.build_map_dict_recycling_efforts_users(row)
             return jsonify(recyclingEffort)
 
     def getAllRecyclingHoursByUser(self, user_id):
@@ -35,7 +60,7 @@ class BaseRecyclingEfforts:
         if not row:
             return jsonify("User or date not found"), 404
         else:
-            recyclingEffort = self.build_map_dict(row)
+            recyclingEffort = self.build_map_dict_all_recycling_hours(row)
             return jsonify(recyclingEffort)
 
     def getRecyclingHoursByUserByDate(self, user_id, recycling_date):
@@ -44,7 +69,7 @@ class BaseRecyclingEfforts:
         if not row:
             return jsonify("User or date not found"), 404
         else:
-            recyclingEffort = self.build_map_dict(row)
+            recyclingEffort = self.build_map_dict_all_recycling_hours(row)
             return jsonify(recyclingEffort)
 
     def getRecyclingHoursByUserByDates(self, user_id):
@@ -52,7 +77,7 @@ class BaseRecyclingEfforts:
         recyclingEfforts_list = dao.getRecyclingHoursByUserByDates(user_id)
         result_list = []
         for row in recyclingEfforts_list:
-            result = self.build_map_dict(row)
+            result = self.build_map_dict_recycling_hours_by_dates(row)
             recyclingEfforts_list.append(result)
         return jsonify(result_list)
 
@@ -62,7 +87,7 @@ class BaseRecyclingEfforts:
         if not row:
             return jsonify("User not found"), 404
         else:
-            recyclingEffort = self.build_map_dict(row)
+            recyclingEffort = self.build_map_dict_amount_recycle(row)
             return jsonify(recyclingEffort)
 
     def getAmountRecycledByUserByDate(self, user_id, recycling_date):
@@ -71,7 +96,7 @@ class BaseRecyclingEfforts:
         if not row:
             return jsonify("User or date not found"), 404
         else:
-            recyclingEffort = self.build_map_dict(row)
+            recyclingEffort = self.build_map_dict_amount_recycle(row)
             return jsonify(recyclingEffort)
 
     def getAmountRecycledByUserByDates(self, user_id):
@@ -79,7 +104,7 @@ class BaseRecyclingEfforts:
         recyclingEfforts_list = dao.getAmountRecycledByUserByDates(user_id)
         result_list = []
         for row in recyclingEfforts_list:
-            result = self.build_map_dict(row)
+            result = self.build_map_dict_amount_recycled_by_dates(row)
             recyclingEfforts_list.append(result)
         return jsonify(result_list)
 
@@ -88,7 +113,7 @@ class BaseRecyclingEfforts:
         recyclingDates_list = dao.getRecyclingDatesByUser(user_id)
         result_list = []
         for row in recyclingDates_list:
-            result = self.build_map_dict(row)
+            result = self.build_map_dict_recycling_dates_by_user(row)
             result_list.append(result)
         return jsonify(result_list)
 
