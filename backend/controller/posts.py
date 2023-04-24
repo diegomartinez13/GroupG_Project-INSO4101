@@ -5,7 +5,7 @@ from backend.model.posts import PostsDAO
 
 class BasePosts:
     def build_map_dict(self, row):
-        result = {'post_id': row[0], 'title': row[1], 'content': row[2], 'created_at': row[3],
+        result = {'post_id': row[0], 'tittle': row[1], 'content': row[2], 'created_at': row[3],
                   'parent_post_id': row[4], 'user_id': row[5]}
         return result
 
