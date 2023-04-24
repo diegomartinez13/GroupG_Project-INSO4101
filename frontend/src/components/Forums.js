@@ -1,8 +1,9 @@
 import React, {Component} from 'react';
-import {styled, Button, Container, TextField, Typography, Stack, Badge} from "@mui/material/"
+import {styled, Button, Container, TextField, Stack, Badge, Typography} from "@mui/material/"
 import {Card, CardContent, CardHeader} from "@mui/material/"
-import {List, ListItem, ListItemButton, ListItemIcon, ListItemText} from "@mui/material/"
-import {Inbox, MessageOutlined} from '@mui/icons-material/';
+import {Accordion, AccordionSummary, AccordionDetails} from "@mui/material/"
+import { MessageOutlined} from '@mui/icons-material/';
+import ForumChat from './ForumChat'
 
 const StyledContainers = styled(Container)(({ theme }) => ({
   backgroundColor: theme.palette.surface.main,
@@ -21,17 +22,26 @@ const CustomForumCard = styled(Card)(({ theme }) => ({
   padding: '0.5em',
   maxWidth: '50rem',
 }));
+const CustomAccordion = styled(Accordion)(({ theme }) => ({
+  backgroundColor: theme.palette.surface.variant,
+  alignContent: 'center',
+  justifyContent: 'center',
+  padding: '0.5em',
+  maxWidth: '50rem',
+}));
 
 const CustomCardHeader = styled(CardHeader)(({ theme }) => ({
   color: theme.palette.surface.text,
 }
 ));
-const CustomListItemText = styled(ListItemText)(({ theme }) => ({
+
+const CustomMessageIcon = styled(MessageOutlined)(({ theme }) => ({
   color: theme.palette.surface.text,
 }
 ));
-const CustomListItemIcon = styled(ListItemIcon)(({ theme }) => ({
+const CustomAccordionSummary = styled(AccordionSummary)(({ theme }) => ({
   color: theme.palette.surface.text,
+  '& .MuiAccordionSummary-expandIconWrapper.Mui-expanded':{transform: 'rotate(0deg)'}
 }
 ));
 
@@ -76,8 +86,9 @@ class Forums extends Component {
     };
 
     return (
-      <><h1>Forums</h1>
+      <>
       <StyledContainers>
+        <h1>Forums</h1>
         <CustomForumCard>
           <CustomCardHeader title='Create a New Forum'></CustomCardHeader>
           <CardContent>
@@ -92,17 +103,21 @@ class Forums extends Component {
         <CustomForumCard>
           <CustomCardHeader title='Active Forums'></CustomCardHeader>
           <CardContent>
-            <List>
               {forumsNames.map(forumName => (
-                <ListItem>
-                  <ListItemButton>
-                    <CustomListItemIcon><Inbox/></CustomListItemIcon>
-                    <CustomListItemText primary={forumName}/>
-                    <CustomListItemIcon><Badge badgeContent={5} color='primary'><MessageOutlined/></Badge></CustomListItemIcon>
-                  </ListItemButton>
-                </ListItem>
+                <CustomAccordion>
+                  <CustomAccordionSummary
+                    expandIcon={<Badge badgeContent={5} color='primary'><CustomMessageIcon /></Badge>}
+                    aria-controls="panel1a-content"
+                    id="panel1a-header"
+                    >
+                    <Typography variant='body1'>{forumName}</Typography>
+                  </CustomAccordionSummary>
+                  <AccordionDetails>
+                    <Typography variant='body2'> TEST </Typography>
+                    <ForumChat></ForumChat>
+                  </AccordionDetails>
+                </CustomAccordion>
               ))}
-            </List>
           </CardContent>
         </CustomForumCard>
       </StyledContainers>
