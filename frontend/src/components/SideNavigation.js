@@ -9,6 +9,7 @@ const SideNavWrapper = styled('div')(({ theme, open }) => ({
   top: 0,
   bottom: 0,
   left: 0,
+  zIndex: 1,
   width: open ? '16em' : '4em',
   transition: theme.transitions.create('width', {
     easing: theme.transitions.easing.sharp,

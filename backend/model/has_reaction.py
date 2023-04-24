@@ -9,7 +9,7 @@ class HasReactionDAO:
         pg_config['dbname'], pg_config['user'], pg_config['password'], pg_config['host'], pg_config['port'])
         self.conn = psycopg2._connect(connection_url)
 
-    def getAllHasRecation(self):
+    def getAllHasReaction(self):
         cursor = self.conn.cursor()
         query = 'select * from HasReaction;'
         cursor.execute(query)
@@ -35,6 +35,14 @@ class HasReactionDAO:
         for row in cursor:
             result.append(row)
         return result
+
+    def insertHasReaction(self, user_id, post_id, is_liked):
+        cursor = self.conn.cursor()
+        query ="insert into HasReaction(user_id, post_id, is_liked) values (%s, %s, %s) returning post_id ;"
+        cursor.execute(query, (user_id, post_id, is_liked,))
+        post_id = cursor.fetchone()[1]
+        self.conn.commit()
+        return post_id
 
     def updateIsLikedByUser(self, user_id, is_liked):
         cursor = self.conn.cursor()

@@ -3,10 +3,14 @@ from flask import jsonify
 from backend.model.has_reaction import HasReactionDAO
 
 
-class BaseUsers:
+class BaseHasReaction:
 
     def build_map_dict(self, row):
-        result = {'user_id': row[0], 'post_id': row[1], 'is_liked': row[2],}
+        result = {'user_id': row[0], 'post_id': row[1], 'is_liked': row[2]}
+        return result
+
+    def build_map_dict_is_liked(self, row):
+        result = {'is_liked': row[0]}
         return result
 
     def build_attr_dict(self, user_id, post_id, is_liked):
@@ -15,7 +19,7 @@ class BaseUsers:
 
     def getAllHasReaction(self):
         dao = HasReactionDAO()
-        user_list = dao.getAllHasRecation()
+        user_list = dao.getAllHasReaction()
         result_list = []
         for row in user_list:
             result = self.build_map_dict(row)
@@ -28,7 +32,7 @@ class BaseUsers:
         if not row:
             return jsonify("User Not Found"), 404
         else:
-            user = self.build_map_dict(row)
+            user = self.build_map_dict_is_liked(row)
             return jsonify(user)
 
     def getIsLikedByPost(self, post_id):
@@ -37,8 +41,17 @@ class BaseUsers:
         if not row:
             return jsonify("Post Not Found"), 404
         else:
-            user = self.build_map_dict(row)
+            user = self.build_map_dict_is_liked(row)
             return jsonify(user)
+
+    def insertHasReaction(self, json):
+        user_id = json['user_id']
+        post_id = json['post_id']
+        is_liked = json['is_liked']
+        dao = HasReactionDAO()
+        post_id = dao.insertHasReaction(user_id, post_id, is_liked)
+        result = self.build_attr_dict(user_id, post_id, is_liked)
+        return jsonify(result), 201
 
     def updateIsLikedByUser(self, user_id, json):
         is_liked = json['is_liked']

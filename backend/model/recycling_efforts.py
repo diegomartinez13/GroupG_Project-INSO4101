@@ -92,30 +92,54 @@ class RecyclingEffortsDAO:
             result.append(row)
         return result
 
+    def insertRecyclingEfforts(self, recycling_hours, amount_recycled, recycling_date, user_id):
+        cursor = self.conn.cursor()
+        query = "insert into recyclingEfforts(recycling_hours, amount_recyled, recycling_date, user_id) values (%s, %s, %s, %s) returning effort_id;"
+        cursor.execute(query, (recycling_hours, amount_recycled, recycling_date, user_id))
+        effort_id = cursor.fetchone()[0]
+        self.conn.commit()
+        return effort_id
+
     def updateRecyclingHoursById(self, effort_id, recycling_hours):
         cursor = self.conn.cusor()
         query = 'update RecyclingEfforts set recycling_hours = %s where effort_id = %s;'
-        cursor.execute(query, (effort_id, recycling_hours,))
+        try:
+            cursor.execute(query, (effort_id, recycling_hours,))
+        except psycopg2.IntegrityError:
+            self.conn.rollback()
+            return 0
         self.conn.commit()
         return effort_id
 
     def updateAmountRecycledById(self, effort_id, amount_recycled):
         cursor = self.conn.cusor()
         query = 'update RecyclingEfforts set amount_recycled = %s where effort_id = %s;'
-        cursor.execute(query, (effort_id,amount_recycled,))
+        try:
+            cursor.execute(query, (effort_id,amount_recycled,))
+        except psycopg2.IntegrityError:
+            self.conn.rollback()
+            return 0
         self.conn.commit()
         return effort_id
 
     def updateRecyclingDateById(self, effort_id, recycling_date):
         cursor = self.conn.cusor()
         query = 'update RecyclingEfforts set recycling_date = %s where effort_id = %s;'
-        cursor.execute(query, (effort_id,recycling_date,))
+        try:
+            cursor.execute(query, (effort_id,recycling_date,))
+        except psycopg2.IntegrityError:
+            self.conn.rollback()
+            return 0
         self.conn.commit()
         return effort_id
 
-    def deleteRecyclingEffort(self, effort_id):
+    def deleteRecyclingEfforts(self, effort_id):
         cursor = self.conn.cursor()
         query = 'delete from RecyclingEfforts where effort_id = %s;'
-        cursor.execute(query, (effort_id,))
+        try:
+            cursor.execute(query, (effort_id,))
+        except psycopg2.IntegrityError:
+            self.conn.rollback()
+            return 0
         self.conn.commit()
         return effort_id
