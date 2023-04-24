@@ -128,7 +128,7 @@ def getUsersIdByUsername(username):
         jsonify("Method Not Allowed"), 405
 
 
-@app.route("user/password/<int:user_id>", methods=['GET', 'POST'])
+@app.route("/user/password/<int:user_id>", methods=['GET', 'POST'])
 def handleUserPasswordById(user_id):
     if request.method == 'GET':
         return BaseUsers().getPasswordById(user_id)
