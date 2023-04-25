@@ -24,6 +24,7 @@ function PostForm() {
   const [content, setContent] = useState('');
   const URL_POST = 'http://localhost:5000/posts';
 
+  // TODO: add user_id, crated_at, parent_post, etc. to the post
   function handleSubmit(event) {
     event.preventDefault();
     const data = { title, content };
