@@ -1,6 +1,6 @@
-import React from 'react';
-import {styled, Container, Typography} from "@mui/material/"
-import {Card, CardContent, CardHeader} from "@mui/material/"
+import {React, useState, useEffect} from 'react';
+import {styled, Container} from "@mui/material/"
+import {Card, CardContent, CardHeader, Stack, Button} from "@mui/material/"
 import PostList from './PostList';
 import NewPost from './NewPost';
 
@@ -29,6 +29,36 @@ const CustomCardHeader = styled(CardHeader)(({ theme }) => ({
 ));
 
 function Forums() {
+  const [userLoggedIn, setUserLoggedIn] = useState(sessionStorage.getItem('user') != null && sessionStorage.getItem('user') != undefined && sessionStorage.getItem('user') != 'undefined')
+
+  function isLogged(){
+    if (!userLoggedIn) {
+      return <>
+      <StyledContainers>
+        <CustomForumCard>
+          <CustomCardHeader title='Please Login to Add New Posts'></CustomCardHeader>
+          <CardContent>
+            <Stack direction='row' justifyContent="space-evenly" alignContent='center' spacing={2}>
+              <Button variant="contained" href="/login">LOG-IN</Button>
+              <Button variant="contained" href="/signup">REGISTER NOW!</Button>
+            </Stack>
+          </CardContent>
+        </CustomForumCard>
+      </StyledContainers>
+      </>
+    } else {
+      return <>
+      <StyledContainers>
+        <CustomForumCard>
+          <CustomCardHeader title='Add New Post'></CustomCardHeader>
+          <CardContent>
+            <NewPost />
+          </CardContent>
+        </CustomForumCard>
+      </StyledContainers>
+      </>
+    };
+  };
     return (
       <>
       <StyledContainers>
@@ -40,14 +70,7 @@ function Forums() {
           </CardContent>
         </CustomForumCard>
       </StyledContainers>
-      <StyledContainers>
-        <CustomForumCard>
-          <CustomCardHeader title='Add New Post'></CustomCardHeader>
-          <CardContent>
-            <NewPost />
-          </CardContent>
-        </CustomForumCard>
-      </StyledContainers>
+      {isLogged()}
       </>
     );
 }

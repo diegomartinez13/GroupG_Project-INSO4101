@@ -30,7 +30,7 @@ app = Flask(__name__, static_folder='build/', static_url_path='/')
 load_dotenv(dotenv_path=".env")
 
 
-CORS(app, origin='http://localhost:3000')
+CORS(app, origin='*')
 
 
 @app.route("/")

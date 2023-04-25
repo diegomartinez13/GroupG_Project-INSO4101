@@ -18,37 +18,37 @@ class PostsDAO:
 
     def getTittleByPostId(self, post_id):
         cursor = self.conn.cursor()
-        query = 'select tittle from posts natural inner join users where post_id = %s;'
-        cursor.execute(query, post_id,)
-        result = cursor.fethone()
+        query = 'select title from posts natural inner join users where post_id = %s;'
+        cursor.execute(query, (post_id,))
+        result = cursor.fetchone()
         return result
 
     def getContentByPostId(self, post_id):
         cursor = self.conn.cursor()
         query = 'select content from posts natural inner join users where post_id = %s;'
         cursor.execute(query, post_id, )
-        result = cursor.fethone()
+        result = cursor.fetchone()
         return result
 
     def getCreatedAtByPostId(self, post_id):
         cursor = self.conn.cursor()
         query = 'select created_at from posts natural inner join users where post_id = %s;'
         cursor.execute(query, post_id, )
-        result = cursor.fethone()
+        result = cursor.fetchone()
         return result
 
     def getParentPostIdByPostId(self, post_id):
         cursor = self.conn.cursor()
         query = 'select parent_post_id from posts natural inner join users where post_id = %s;'
         cursor.execute(query, post_id, )
-        result = cursor.fethone()
+        result = cursor.fetchone()
         return result
 
     def getUserIdByPostId(self, post_id):
         cursor = self.conn.cursor()
         query = 'select user_id from posts natural inner join users where post_id = %s;'
         cursor.execute(query, post_id, )
-        result = cursor.fethone()
+        result = cursor.fetchone()
         return result
 
     def insertPost(self, tittle, content, created_at, parent_post_id, user_id):
