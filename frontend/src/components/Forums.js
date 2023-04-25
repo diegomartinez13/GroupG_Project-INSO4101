@@ -31,7 +31,9 @@ const CustomCardHeader = styled(CardHeader)(({ theme }) => ({
 function Forums() {
   const [userLoggedIn, setUserLoggedIn] = useState(sessionStorage.getItem('user') != null && sessionStorage.getItem('user') != undefined && sessionStorage.getItem('user') != 'undefined')
 
-  function isLogged(){
+  // TODO: Add a check to see if the user is logged in or not to comment on posts
+  // TODO: Add comment fuctionality to posts
+  function isLoggedToPost(){
     if (!userLoggedIn) {
       return <>
       <StyledContainers>
@@ -70,7 +72,7 @@ function Forums() {
           </CardContent>
         </CustomForumCard>
       </StyledContainers>
-      {isLogged()}
+      {isLoggedToPost()}
       </>
     );
 }
