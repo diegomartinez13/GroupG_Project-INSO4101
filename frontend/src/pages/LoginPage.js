@@ -68,12 +68,9 @@ const LoginPage = () => {
           width:  isSmallScreen ? "80vw" : "30vw",
           height:  isSmallScreen ? "60vh" : "calc(100vh - 540px)",
           minHeight: 350,
-        //   bgcolor: 'background.paper',
-          border: '2px solid #000',
-          boxShadow: 24,
-          p:4,
-        //   backgroundColor: '#fcfcf9'
-        //   backgroundColor: '#ffffff'    
+          border: '1px solid',
+          boxShadow: 10,
+          p:4   
           }} 
           >
             {/* <Slide direction="down" in={true} mountOnEnter unmountOnExit > */}
@@ -91,6 +88,7 @@ const LoginPage = () => {
                     id="outlined-basic" 
                     variant="outlined"
                     size='small'
+                    placeholder='example@pr.com'
                     value={inputValues.username}
                     onChange={(e) => setInputValues({...inputValues, username: e.target.value})}
                 
@@ -104,6 +102,7 @@ const LoginPage = () => {
                     variant="outlined" 
                     size='small'
                     type='password'
+                    placeholder='password'
                     value={inputValues.password}
                     onChange={(e) => setInputValues({...inputValues, password: e.target.value})}
                      />

@@ -58,10 +58,10 @@ const SignUpPage = () => {
         transform: 'translate(-50%, -50%)',
         width:  isSmallScreen ? "80vw" : "30vw",
         height:  isSmallScreen ? "60vh" : "calc(100vh - 540px)",
-          minHeight: 350,
+        minHeight: 350,
         //   bgcolor: 'background.paper',
-          border: '2px solid #000',
-          boxShadow: 24,
+        border: '1px solid',
+        boxShadow: 10,
           p:4,
         //   backgroundColor: '#fcfcf9'
         //   backgroundColor: '#ffffff'          
@@ -78,6 +78,7 @@ const SignUpPage = () => {
                     id="outlined-basic" 
                     variant="outlined"
                     size='small'
+                    placeholder='example@pr.com'
                     value={inputValues.username}
                     onChange={(e) => setInputValues({...inputValues, username: e.target.value})}
                     error={inputValues.username.length > 50}
@@ -91,6 +92,7 @@ const SignUpPage = () => {
                     variant="outlined" 
                     type='password'
                     size='small'
+                    placeholder='password'
                     value={inputValues.password}
                     onChange={(e) => setInputValues({...inputValues, password: e.target.value})}
                     />
@@ -103,6 +105,7 @@ const SignUpPage = () => {
                     variant="outlined" 
                     type='password'
                     size='small' 
+                    placeholder='confirm password'
                     value={inputValues.password_confirmation}
                     onChange={(e) => setInputValues({...inputValues, password_confirmation: e.target.value})}
                     error={inputValues.password !== inputValues.password_confirmation}
