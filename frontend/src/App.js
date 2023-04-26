@@ -8,6 +8,7 @@ import ProfilePage from './pages/ProfilePage';
 import ForumPage from './pages/ForumPage';
 import LoginPage from './pages/LoginPage';
 import SignUpPage from './pages/SignUpPage';
+import EditActivityPage from './pages/EditActivityPage';
 
 import { createTheme, ThemeProvider, useMediaQuery } from '@mui/material';
 import ThemeToggle from './components/ThemeToggle';
@@ -207,6 +208,8 @@ function App() {
                       <Route path="/forum" element={<ForumPage />} />
                       <Route path="/login" element={<LoginPage />} />
                       <Route path="/signup" element={<SignUpPage />} />
+                      <Route path="/profile-edit" element={<EditActivityPage />} />
+
 
                     </Routes>
                   </Box>
