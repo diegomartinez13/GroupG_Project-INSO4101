@@ -133,7 +133,3 @@ const SignUpPage = () => {
 }
 
 export default SignUpPage;
-/* Minor Details: 
-1. Add shadow behind Login Box (like the background shadow)
-2. Modify box to darker color (black?) when changed to dark mode
-*/

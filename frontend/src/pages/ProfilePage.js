@@ -43,20 +43,6 @@ function ProfilePage() {
   return (
 
     <>
-      {/* <h1>Profile</h1> */}
-      {/* if userLoggedIn == False */}
-      <Button variant="outlined" href="/signup">
-        Sign Up
-      </Button>
-
-      <Button variant="text" href="/login">
-        Login
-      </Button>
-
-      {/* if userLoggedIn == True */}
-          {/* Profile page*/}
-  
-
     <Button href="/profile-edit"
       sx={{
         position: 'absolute',
@@ -125,7 +111,7 @@ function ProfilePage() {
       </Card>
 
 
-
+      {/* Goals */}
       <Card 
         sx={{width:400,
           padding: '0.5em',
@@ -181,7 +167,7 @@ function ProfilePage() {
 
       </Card>
 
-
+      {/* Efforts */}
       <Card sx={{width: 650,     
       padding: '0.5em',
       margin: '0.5em',
@@ -237,22 +223,8 @@ function ProfilePage() {
 
 export default ProfilePage;
 /*
-1.Icon of Person/Profile Pic
-2. Card Personal Info: (Bottom)
-  -Name
-  -Rewards Point Reward
-  -Amount Recycled
-  -Contribution Hours
-3. Card Goals:
-  *any personal goals added/editted*
-  -Examples: plastic/water bottles saved / donated,
-
-4. History of Goals / Efforts:
-  -List Format?
-5. Record Activity Button
-  -top right corner, edit the profile / activity part
-
 Minor Details:
 1.there's a white area (box) behind Recorder Recycling Efforts, 
   no idea what's that about.
+2. Modify box to darker color (black?) when changed to dark mode done
 */
