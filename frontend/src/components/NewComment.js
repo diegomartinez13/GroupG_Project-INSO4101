@@ -1,4 +1,4 @@
-import {Reactd, useState} from 'react';
+import {React, useState} from 'react';
 import {Dialog, DialogActions, DialogContent,DialogContentText, DialogTitle} from '@mui/material';
 import {styled, Button,TextField, Grid} from "@mui/material/"
 import SendOutlinedIcon from '@mui/icons-material/SendOutlined';
