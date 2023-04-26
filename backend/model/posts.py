@@ -9,14 +9,34 @@ class PostsDAO:
 
     def getAllPosts(self):
         cursor = self.conn.cursor()
-        query = 'select * from Posts'
+        query = """SELECT Posts.post_id, Posts.title, Posts.content, Posts.created_at, Posts.parent_post_id, COUNT(HasReaction.is_liked=true) as likes, COUNT(HasReaction.is_liked=false) as dislikes, Users.username
+                FROM Posts 
+                INNER JOIN Users ON Posts.user_id = Users.user_id
+                LEFT JOIN HasReaction ON Posts.post_id = HasReaction.post_id
+                WHERE Posts.parent_post_id = Posts.post_id OR Posts.parent_post_id IS NULL
+                GROUP BY Posts.post_id, Posts.title, Posts.content, Posts.created_at, Posts.parent_post_id, Users.username;"""
         cursor.execute(query)
         result = []
         for row in cursor:
             result.append(row)
         return result
+    
+    def getCommentsByPostId(self, post_id):
+        cursor = self.conn.cursor()
+        query = """SELECT Posts.post_id, Posts.title, Posts.content, Posts.created_at, Posts.parent_post_id, COUNT(HasReaction.is_liked=true) as likes, COUNT(HasReaction.is_liked=false) as dislikes, Users.username
+                FROM Posts 
+                INNER JOIN Users ON Posts.user_id = Users.user_id
+                LEFT JOIN HasReaction ON Posts.post_id = HasReaction.post_id
+                WHERE Posts.parent_post_id = %s AND Posts.parent_post_id != Posts.post_id
+                GROUP BY Posts.post_id, Posts.title, Posts.content, Posts.created_at, Posts.parent_post_id, Users.username;"""
+        cursor.execute(query, (post_id,))
+        result = []
+        for row in cursor:
+            result.append(row)
+        return result
+    
 
-    def getTittleByPostId(self, post_id):
+    def getTitleByPostId(self, post_id):
         cursor = self.conn.cursor()
         query = 'select title from posts natural inner join users where post_id = %s;'
         cursor.execute(query, (post_id,))
@@ -51,17 +71,17 @@ class PostsDAO:
         result = cursor.fetchone()
         return result
 
-    def insertPost(self, tittle, content, created_at, parent_post_id, user_id):
+    def insertPost(self, title, content, created_at, parent_post_id, user_id):
         cursor = self.conn.cursor()
-        query = "insert into Posts(tittle, content, cretaed_at, parent_post_id, user_id) values (%s, %s, %s, %s, %s) returning post_id ;"
-        cursor.execute(query, (tittle, content, created_at, parent_post_id, user_id))
+        query = "insert into Posts(title, content, created_at, parent_post_id, user_id) values (%s, %s, %s, %s, %s) returning post_id ;"
+        cursor.execute(query, (title, content, created_at, parent_post_id, user_id))
         post_id = cursor.fetchone()[0]
         self.conn.commit()
         return post_id
 
-    def updateTittleByPostId(self, post_id):
+    def updateTitleByPostId(self, post_id):
         cursor = self.conn.cursor()
-        query = 'update posts set tittle = %s where post_id = %s;'
+        query = 'update posts set title = %s where post_id = %s;'
         try:
             cursor.execute(query, (post_id,))
         except psycopg2.IntegrityError:

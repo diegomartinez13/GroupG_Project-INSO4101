@@ -63,9 +63,12 @@ function Forums() {
   };
     return (
       <>
+      
       <StyledContainers>
         <h1>Forum</h1>
+        
         <CustomForumCard>
+          
           <CustomCardHeader title='Posts'></CustomCardHeader>
           <CardContent>
             <PostList />
@@ -73,6 +76,7 @@ function Forums() {
         </CustomForumCard>
       </StyledContainers>
       {isLoggedToPost()}
+      
       </>
     );
 }

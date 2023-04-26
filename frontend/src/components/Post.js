@@ -37,32 +37,18 @@ function Post(props) {
   const title = props.title;
   const content = props.content;
   const date = props.creation_date;
-  const author_id = props.author;
-  const parent_post_id = props.parent_post_id;
+  const author = props.author;
+  const post_id = props.post_id;
+  const likes = props.likes;
+  const dislikes = props.dislikes;
 
-  const [authorUsername, setAuthorUsername] = useState([]);
-  const URL_USERNAME = 'http://localhost:5000/user/username/' + author_id;
-  const [parentPost, setParentPost] = useState([]);
-  const URL_POST_TITLE = 'http://localhost:5000/tittle/' + parent_post_id;
+  const [comments, setComments] = useState([]);
+  const URL_POST_COMMENTS = 'http://localhost:5000/comments/' + post_id;
   useEffect(() => {
-    fetch(URL_USERNAME)
+    fetch(URL_POST_COMMENTS)
       .then(response => response.json())
-      .then(data => setAuthorUsername(data.username));
-    fetch(URL_POST_TITLE)
-      .then(response => response.json())
-      .then(data => setParentPost(data.title));
-    console.log(parentPost)
+      .then(data => setComments(data));
   }, []);
-
-  function ifParentPost() {
-    if (parent_post_id == null || parent_post_id == 0 || parent_post_id == '' || parent_post_id == -1) {
-      return null;
-    } else {
-      return (
-        <CustomTypo variant='body2'> -- Parent post: {parentPost}</CustomTypo>
-      );
-    }
-  };
 
   return (
     <CustomAccordion>
@@ -70,13 +56,17 @@ function Post(props) {
         <Stack direction="row" justifyContent="space-between" alignItems="center" spacing={3}>
         <CustomAccountCircle></CustomAccountCircle>
         <CustomTypo variant='h6'>"{title}"</CustomTypo>
-        <CustomTypo variant='subtitle2'> by: {authorUsername}</CustomTypo>
+        <CustomTypo variant='subtitle2'> by: {author}</CustomTypo>
         </Stack>
       </CustomAccordionSummary>
       <CustomAccordionDetails>
         <CustomTypo variant='body1'>{content}</CustomTypo>
         <CustomTypo variant='body2'> -- Created at: {date}</CustomTypo>
-        {ifParentPost()}
+        <CustomTypo variant='body2'> -- Likes: {likes} Dislikes: {dislikes}</CustomTypo>
+        <CustomTypo variant='body2'> -- Comments:</CustomTypo>
+        {comments.map(comment => (
+          <Post key={comment.post_id} post_id={comment.post_id} title={comment.title} content={comment.content} creation_date={comment.created_at} author={comment.username} likes={comment.likes} dislikes={comment.dislikes}/>
+        ))}
       </CustomAccordionDetails>
     </CustomAccordion>
   );

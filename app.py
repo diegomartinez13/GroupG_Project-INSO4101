@@ -58,8 +58,6 @@ def login():
 
     if request.method == 'POST':
 
-        print(request.json)
-
         username = request.json['username']
 
         password = request.json['password']
@@ -67,9 +65,9 @@ def login():
 
         user = BaseUsers().getUserByUsername(username)
 
-        if user:
+        if user[1] == 200:
 
-            if check_password_hash(user.json['password'], password):
+            if check_password_hash(user[0].json['password'], password):
                 return user
             else:
 
@@ -108,8 +106,6 @@ def register():
 
             return jsonify(Error="Passwords do not match"), 401
         else:
-
-            print(generate_password_hash(password, method='sha256'))
 
             result = BaseUsers().insertUser(username, generate_password_hash(password, method='sha256'), 0, 0, 0, False)
             
@@ -929,19 +925,27 @@ def handlePostsById(post_id):
         return jsonify('Method Not Allowed'), 405
 
 
-@app.route("/tittle/<int:post_id>", methods=['GET', 'POST'])
+@app.route("/title/<int:post_id>", methods=['GET', 'POST'])
 
-def getPostTittleById(post_id):
+def getPostTitleById(post_id):
 
     if request.method == 'GET':
 
-        return BasePosts().getTittleByPostId(post_id)
+        return BasePosts().getTitleByPostId(post_id)
 
     elif request.method == 'POST':
 
-        return BasePosts().updateTittleByPostId(post_id, request.json)
+        return BasePosts().updateTitleByPostId(post_id, request.json)
     else:
 
+        return jsonify("Method Not Allowed"), 405
+    
+@app.route("/comments/<int:post_id>", methods=['GET'])
+
+def getPostCommentsById(post_id):
+    if request.method == 'GET':
+        return BasePosts().getCommentsByPostId(post_id)
+    else:
         return jsonify("Method Not Allowed"), 405
 
 

@@ -22,12 +22,16 @@ const AddButton = styled(Button)(({theme}) => ({
 function PostForm() {
   const [title, setTitle] = useState('');
   const [content, setContent] = useState('');
+  const [user_id, setUser_id] = useState(JSON.parse(sessionStorage.getItem('user')).user_id); 
+  const [created_at, setCreated_at] = useState(new Date().toISOString()); 
+  const [parent_post_id, setParent_post_id] = useState(null); // null parentPost means it is a new post with no parent
   const URL_POST = 'http://localhost:5000/posts';
 
-  // TODO: add user_id, crated_at, parent_post, etc. to the post
   function handleSubmit(event) {
     event.preventDefault();
-    const data = { title, content };
+    console.log(title, content, user_id, created_at, parent_post_id);
+    const data = { title, content, user_id, created_at, parent_post_id };
+    
     fetch(URL_POST, {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },

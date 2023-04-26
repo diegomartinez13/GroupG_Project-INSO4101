@@ -1,6 +1,7 @@
 import React, {useState} from 'react';
-import { styled,  useMediaQuery, Button, TextField, Typography, FormGroup, FormControlLabel, Checkbox, Divider } from '@mui/material';
+import { styled, Snackbar, useMediaQuery, Button, TextField, Typography, FormGroup, FormControlLabel, Checkbox, Divider, Alert } from '@mui/material';
 import { Box } from '@mui/system';
+import MuiAlert, { AlertProps } from '@mui/material/Alert';
 
 const LogInUrl = 'http://localhost:5000/login';
 
@@ -32,6 +33,21 @@ const LoginPage = () => {
         password: '',
     });
 
+    const [popUp, setPopUp] = useState({
+        open: false,
+        vertical: 'top',
+        horizontal: 'center',
+        message: '',
+    });
+
+    const [alert, setAlert] = useState({
+        open: false,
+        severity: 'success',
+        message: '',
+     });
+
+    const { vertical, horizontal, open } = popUp;
+
     const [rememberMe, setRememberMe] = useState(sessionStorage.getItem('rememberMe') != null && sessionStorage.getItem('rememberMe') != '' && sessionStorage.getItem('rememberMe') != undefined && sessionStorage.getItem('rememberMe') != 'undefined' ? true : false);
 
 
@@ -46,17 +62,40 @@ const LoginPage = () => {
             },
             body: JSON.stringify(inputValues)
         })
-        .then(response => response.json())
+        .then(response => {
+
+            if (response.status === 200) {
+                setAlert({ open: true, severity: 'success', message: 'Success! You are now logged in.' });
+                return response.json();
+            } else {
+                throw new Error("Invalid credentials");
+            }
+        })
         .then(data => {
             console.log('Success:', data);
             if (rememberMe) {
                 sessionStorage.setItem('rememberMe', data.username);
             }
-            sessionStorage.setItem('user', data);
+            console.log(data)
+            sessionStorage.setItem('user', JSON.stringify(data));
             window.location.href = '/profile';
         }
-        )
+        ).catch((error) => {
+            console.error('Error:', error);
+            setAlert({ open: true, severity: 'error', message: error + '. Please try again.' });        });
     }
+
+    const handleClose = () => {
+        setPopUp({ ...popUp, open: false, message: '' });
+      };
+
+      const handleAlertClose = (event, reason) => {
+        if (reason === 'clickaway') {
+           return;
+        }
+     
+        setAlert({ ...alert, open: false });
+     };
 
     return(
         
@@ -126,6 +165,13 @@ const LoginPage = () => {
                 >Sign Up</Button>
             </LogInBox>          
             {/* </Slide> */}
+            <Snackbar open={alert.open} autoHideDuration={6000} onClose={handleAlertClose}>
+   <MuiAlert elevation={6} variant="filled" onClose={handleAlertClose} severity={alert.severity}>
+      {alert.message}
+   </MuiAlert>
+</Snackbar>
+
+            
         </LogInBox>
         
     )

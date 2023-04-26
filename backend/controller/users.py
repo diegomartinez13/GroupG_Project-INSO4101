@@ -98,7 +98,7 @@ class BaseUsers:
             return jsonify("User Not Found"), 404
         else:
             user = self.build_map_dict(row)
-            return jsonify(user)
+            return jsonify(user), 200
 
     def getUsernameById(self, user_id):
         dao = UserDAO()

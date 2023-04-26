@@ -18,8 +18,7 @@ function PostList() {
   return (
     <CustomList>
       {posts.map(post => (
-        <Post key={post.post_id} title={post.tittle} content={post.content} creation_date={post.created_at} author={post.user_id} parent_post_id={post.parent_post_id}/>
-        // ,console.log(post)
+        <Post key={post.post_id} post_id={post.post_id} title={post.title} content={post.content} creation_date={post.created_at} author={post.username} likes={post.likes} dislikes={post.dislikes}/>
       ))}
     </CustomList>
   );
