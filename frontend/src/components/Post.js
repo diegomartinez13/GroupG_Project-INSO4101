@@ -1,7 +1,7 @@
 import {React, useState, useEffect} from 'react';
 import { styled, Typography} from '@mui/material';
-import { Accordion, AccordionSummary, AccordionDetails, Stack} from '@mui/material';
-import { AccountCircle } from '@mui/icons-material';
+import { Grid, IconButton, Accordion, AccordionSummary, AccordionDetails, Stack} from '@mui/material';
+import { AccountCircle, ThumbDown, ThumbUp } from '@mui/icons-material';
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
 
 const CustomAccordion = styled(Accordion)(({ theme }) => ({
@@ -39,8 +39,33 @@ function Post(props) {
   const date = props.creation_date;
   const author = props.author;
   const post_id = props.post_id;
-  const likes = props.likes;
-  const dislikes = props.dislikes;
+  const is_comment = props.is_comment;
+
+  const [likes, setLikes] = useState(props.likes);
+  const [dislikes, setDislikes] = useState(props.dislikes);
+  const [isLiked, setIsLiked] = useState(false);
+
+  const handleLike = () => {
+    if (!isLiked) {
+      setLikes(likes + 1);
+      setIsLiked(true);
+      setDislikes(dislikes - 1);
+    } else {
+      setLikes(likes - 1);
+      setIsLiked(false);
+    }
+  };
+
+  const handleDislike = () => {
+    if (isLiked) {
+      setLikes(likes - 1);
+      setIsLiked(false);
+      setDislikes(dislikes + 1);
+    } else {
+      setDislikes(dislikes - 1);
+      setIsLiked(true);
+    }
+  };
 
   const [comments, setComments] = useState([]);
   const URL_POST_COMMENTS = 'http://localhost:5000/comments/' + post_id;
@@ -55,17 +80,31 @@ function Post(props) {
       <CustomAccordionSummary expandIcon={<CustomExpand />}>
         <Stack direction="row" justifyContent="space-between" alignItems="center" spacing={3}>
         <CustomAccountCircle></CustomAccountCircle>
-        <CustomTypo variant='h6'>"{title}"</CustomTypo>
+        { !is_comment && <CustomTypo variant='h6'>"{title}"</CustomTypo> }
+        { is_comment && <CustomTypo variant='body2'>{content}</CustomTypo> }
         <CustomTypo variant='subtitle2'> by: {author}</CustomTypo>
         </Stack>
       </CustomAccordionSummary>
       <CustomAccordionDetails>
-        <CustomTypo variant='body1'>{content}</CustomTypo>
-        <CustomTypo variant='body2'> -- Created at: {date}</CustomTypo>
-        <CustomTypo variant='body2'> -- Likes: {likes} Dislikes: {dislikes}</CustomTypo>
-        <CustomTypo variant='body2'> -- Comments:</CustomTypo>
+        { !is_comment &&<CustomTypo variant='body1'>{content}</CustomTypo> }
+        <CustomTypo variant='body2'> -- Posted at: {date}</CustomTypo>
+        <Grid container justifyContent="flex-end">
+  <Grid item>
+    <IconButton color={isLiked ? 'primary' : 'default'} onClick={handleLike}>
+      <ThumbUp /> {likes}
+    </IconButton>
+  </Grid>
+  <Grid item>
+    <IconButton color={!isLiked ? 'primary' : 'default'} onClick={handleDislike}>
+      <ThumbDown /> {dislikes}
+    </IconButton>
+  </Grid>
+</Grid>
+
+        <CustomTypo variant='h6'> Comments:</CustomTypo>
+        
         {comments.map(comment => (
-          <Post key={comment.post_id} post_id={comment.post_id} title={comment.title} content={comment.content} creation_date={comment.created_at} author={comment.username} likes={comment.likes} dislikes={comment.dislikes}/>
+          <Post key={comment.post_id} post_id={comment.post_id} title={comment.title} content={comment.content} creation_date={comment.created_at} author={comment.username} likes={comment.likes} dislikes={comment.dislikes} is_comment={true}/>
         ))}
       </CustomAccordionDetails>
     </CustomAccordion>
