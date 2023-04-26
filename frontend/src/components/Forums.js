@@ -38,7 +38,7 @@ function Forums() {
       return <>
       <StyledContainers>
         <CustomForumCard>
-          <CustomCardHeader title='Please Login to Add New Posts'></CustomCardHeader>
+          <CustomCardHeader title='Please Login to Add New Posts or to Comment'></CustomCardHeader>
           <CardContent>
             <Stack direction='row' justifyContent="space-evenly" alignContent='center' spacing={2}>
               <Button variant="contained" href="/login">LOG-IN</Button>
@@ -63,12 +63,9 @@ function Forums() {
   };
     return (
       <>
-      
       <StyledContainers>
         <h1>Forum</h1>
-        
         <CustomForumCard>
-          
           <CustomCardHeader title='Posts'></CustomCardHeader>
           <CardContent>
             <PostList />

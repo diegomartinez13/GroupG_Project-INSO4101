@@ -6,9 +6,15 @@ import SendOutlinedIcon from '@mui/icons-material/SendOutlined';
 const CustomTextField = styled(TextField)(({ theme }) => ({
   backgroundColor: theme.palette.surface.variant,
   color: theme.palette.surface.text,
+  '& .MuiInputBase-input, & textarea': {
+    color: theme.palette.surface.text,
+  },
   '& .rbc-event': {
-    backgroundColor: theme.palette.primary.main,
-    color: theme.palette.primary.text,
+    backgroundColor: theme.palette.surface.main,
+    color: theme.palette.surface.variant,
+    '& .MuiInputBase-input, & textarea': {
+      color: theme.palette.surface.variant,
+    },
   },
   width: '100%',
 }));
@@ -40,13 +46,15 @@ function PostForm() {
       .then(response => response.json())
       .then(data => console.log(data))
       .catch(error => console.error(error));
+    
+    window.location.reload();
   };
 
   function noInput(input1, input2) {
     if(input1 !== '' && input2 !== ''){
       return <AddButton variant='contained' color='success' onClick={handleSubmit}><SendOutlinedIcon></SendOutlinedIcon></AddButton>
     }else{
-      return <AddButton variant='outlined' color='success' disabled><SendOutlinedIcon></SendOutlinedIcon></AddButton>
+      return <AddButton variant='outlined' disabled><SendOutlinedIcon></SendOutlinedIcon></AddButton>
     };
   };
 

@@ -1,8 +1,9 @@
 import {React, useState, useEffect} from 'react';
-import { styled, Typography} from '@mui/material';
+import { Button, styled, Typography} from '@mui/material';
 import { Grid, IconButton, Accordion, AccordionSummary, AccordionDetails, Stack} from '@mui/material';
 import { AccountCircle, ThumbDown, ThumbUp } from '@mui/icons-material';
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
+import PostComment from './NewComment';
 
 const CustomAccordion = styled(Accordion)(({ theme }) => ({
   backgroundColor: theme.palette.surface.main,
@@ -44,26 +45,42 @@ function Post(props) {
   const [likes, setLikes] = useState(props.likes);
   const [dislikes, setDislikes] = useState(props.dislikes);
   const [isLiked, setIsLiked] = useState(false);
+  const [isDisliked, setIsDisliked] = useState(false);
+  const [userLoggedIn, setUserLoggedIn] = useState(sessionStorage.getItem('user') != null && sessionStorage.getItem('user') != undefined && sessionStorage.getItem('user') != 'undefined')
+
+  function isLoggedToComment(){
+    if (!userLoggedIn){
+      return <Typography variant="body2" style={{color : "green"}}>Login or Register to comment</Typography>
+    } else {
+      return <PostComment post_id={post_id} />
+    };
+  };
 
   const handleLike = () => {
     if (!isLiked) {
       setLikes(likes + 1);
       setIsLiked(true);
-      setDislikes(dislikes - 1);
+      if (isDisliked) {
+        setDislikes(dislikes - 1);
+        setIsDisliked(false);
+      }
     } else {
       setLikes(likes - 1);
       setIsLiked(false);
     }
   };
-
+  
   const handleDislike = () => {
-    if (isLiked) {
-      setLikes(likes - 1);
-      setIsLiked(false);
+    if (!isDisliked) {
       setDislikes(dislikes + 1);
+      setIsDisliked(true);
+      if (isLiked) {
+        setLikes(likes - 1);
+        setIsLiked(false);
+      }
     } else {
       setDislikes(dislikes - 1);
-      setIsLiked(true);
+      setIsDisliked(false);
     }
   };
 
@@ -88,19 +105,21 @@ function Post(props) {
       <CustomAccordionDetails>
         { !is_comment &&<CustomTypo variant='body1'>{content}</CustomTypo> }
         <CustomTypo variant='body2'> -- Posted at: {date}</CustomTypo>
-        <Grid container justifyContent="flex-end">
-  <Grid item>
-    <IconButton color={isLiked ? 'primary' : 'default'} onClick={handleLike}>
-      <ThumbUp /> {likes}
-    </IconButton>
-  </Grid>
-  <Grid item>
-    <IconButton color={!isLiked ? 'primary' : 'default'} onClick={handleDislike}>
-      <ThumbDown /> {dislikes}
-    </IconButton>
-  </Grid>
-</Grid>
-
+        <Grid container justifyContent="flex-end" alignItems="center">
+          <Grid item>
+            {isLoggedToComment()}
+          </Grid>
+          <Grid item>
+            <IconButton color={isLiked ? 'primary' : 'default'} onClick={handleLike}>
+              <ThumbUp /> {likes}
+            </IconButton>
+          </Grid>
+          <Grid item>
+            <IconButton color={isDisliked ? 'primary' : 'default'} onClick={handleDislike}>
+              <ThumbDown /> {dislikes}
+            </IconButton>
+          </Grid>
+        </Grid>
         <CustomTypo variant='h6'> Comments:</CustomTypo>
         
         {comments.map(comment => (
