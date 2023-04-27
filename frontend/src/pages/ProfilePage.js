@@ -7,6 +7,7 @@ import ModeEditIcon from '@mui/icons-material/ModeEdit';
 
 function ProfilePage() {
 
+// Linear Progress Bar with Label at end
   function LinearProgressWithLabel(props) {
     return (
       <Box sx={{ display: 'flex', alignItems: 'center' }}>
@@ -35,8 +36,6 @@ function ProfilePage() {
       clearInterval(timer);
     };
   }, []);
-
-
 
 
 
@@ -152,7 +151,9 @@ function ProfilePage() {
           <Typography variant="body1" color="textSecondary" component="p">
             Goal 4
           </Typography>
-          <LinearProgress variant='determinate' value={progress}            
+          <LinearProgress variant='determinate' 
+            // value={progress}    
+            value={60}        
             sx={{height: 20 , maxWidth:350}} 
             />
 
@@ -160,7 +161,11 @@ function ProfilePage() {
           <Typography variant="body1" color="textSecondary" component="p">
             Goal 5
           </Typography>
-          <LinearProgressWithLabel value={progress} sx={{height: 20 , maxWidth:350}}/>
+          {/* <LinearProgressWithLabel value={progress} sx={{height: 20 , maxWidth:350}}/> */}
+          <LinearProgress variant='determinate' value={60} 
+              sx={{height: 20 , maxWidth:350}} 
+          />
+
 
         </CardContent>
 
@@ -185,29 +190,28 @@ function ProfilePage() {
           <Typography variant="body1" color="textSecondary" component="p">
             Donated clothing
           </Typography>
-          <LinearProgress variant='determinate' value={60}
-          // sx={{height: 10}}
-          />
+          <LinearProgress variant='determinate' value={50}  sx={{height: 10}} />
 
           <Typography variant="body1" color="textSecondary" component="p">
             Started composting at home
           </Typography>
-          <LinearProgress variant='determinate' value={60}/>
+          <LinearProgress variant='determinate' value={50}  sx={{height: 10}}/>
 
           <Typography variant="body1" color="textSecondary" component="p">
             Recycled for a week
           </Typography>
-          <LinearProgress variant='determinate' value={60}/>
+          <LinearProgress variant='determinate' value={50}  sx={{height: 10}}/>
 
           <Typography variant="body1" color="textSecondary" component="p">
             Recycled for 6 months
           </Typography>
-          <LinearProgress variant='determinate' value={60}/>
+          <LinearProgress variant='determinate' value={50}  sx={{height: 10}}/>
 
           <Typography variant="body1" color="textSecondary" component="p">
-            Donated clothing
+            Composted for a week
           </Typography>
-          <LinearProgress variant='determinate' value={60}/>
+          <LinearProgress variant='determinate' value={50}  sx={{height: 10}}/>
+
 
 
         </CardContent>
