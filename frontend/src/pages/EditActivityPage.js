@@ -6,9 +6,9 @@ import DeleteIcon from '@mui/icons-material/Delete';
 import CloseIcon from '@mui/icons-material/Close';
 import AddIcon from '@mui/icons-material/Add';
 
-import { styled, useMediaQuery, Button,  Box, Card, CardContent,CardActions, Typography, Grid, 
-    LinearProgress, CardMedia, CardHeader, TextField, Input, InputLabel, Stack,
-    FormLabel, FormControl, OutlinedInput, Slider, Modal, IconButton, Accordion, AccordionSummary } from '@mui/material';
+import { styled, Button,  Box, Card, CardContent, Typography, Grid, 
+    LinearProgress, CardMedia, CardHeader, TextField, Slider, Modal, 
+    IconButton } from '@mui/material';
 
 
 
@@ -146,10 +146,7 @@ function EditModal(){
     );
   }
 
-function EditActivityPage() {
-
-    const isSmallScreen = useMediaQuery('(max-width: 600px)');
-
+function EditActivityPage(props) {
 
     // Edit Avatar/Image
     const[image, setImage] = React.useState('');
@@ -157,24 +154,6 @@ function EditActivityPage() {
         console.log(e.target.files)
         setImage(e.target.files[0])
     }
-    // function handleAPI(){
-    //     const formData = new FormData()
-    //     formData.append('image',image)
-    //     axios.post('url', formData).then((res) => {
-    //         console.log(res)
-    //     })
-    // }
-    // state = {
-    //     selectedFile: null
-    // }
-    // fileSelectedHandler = event => {
-    //     this.setState({
-    //         selectedFile: event.target.files[0]
-    //     })
-    // }
-    // fileUploadHandler = () => {
-
-    // }
 
     // Preview Image
     const [preview, setPreview] = React.useState(null);
@@ -207,10 +186,9 @@ function EditActivityPage() {
 
     return(
         <>    
-        {/* <h1 >Edit Page</h1> */}
-        <header sx={{transform: 'translate(-10px,-30px)', variant:'h1'  }}> Edit Page</header>
-        
 
+        <header sx={{transform: 'translate(-10px,-30px)', variant:'h1'  }}> Edit Page</header>
+    
     {/*Save Button (upper right)  */}
         <Button href="/profile"
             sx={{
@@ -485,8 +463,5 @@ export default EditActivityPage;
 Minor Details:
 1.there's a white area (box) behind Recorder Recycling Efforts, 
   no idea what's that about.
-2. Modify box to darker color (black?) when changed to dark mode done
-
-<Route path="/profile" element={ userLoggedIn ? <ProfilePage /> : <LoginPage /> } />
-<Route path="/profile" element={ <ProfilePage /> } />        
+2. Modify box to darker color (black?) when changed to dark mode done  
 */
