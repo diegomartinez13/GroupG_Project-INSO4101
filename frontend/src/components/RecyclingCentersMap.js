@@ -1,59 +1,87 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 import { MapContainer, TileLayer, Marker, Popup, useMap } from "react-leaflet";
-import { Card, CardHeader, useMediaQuery, styled } from "@mui/material";
+import { csv } from "d3-fetch";
+import datas from "./recycling_centers.csv";
+import L from "leaflet";
 
-const start = [18.1995, -67.1448];
+const MapWithCSVMarkers = () => {
+  const [markers, setMarkers] = useState([]);
+  const [userLocation, setUserLocation] = useState(null);
+  const [mapSize, setMapSize] = useState({ width: "100%", height: "500px" });
 
-const StyledCardHeader = styled(CardHeader)(({ theme }) => ({
-    color: theme.palette.surface.text,
-    }));
+  useEffect(() => {
+    // Load the CSV file and parse its contents
+    csv(datas).then((data) => {
+      // Map the CSV rows to Marker components
+      const newMarkers = data?.map((row) => (
+        <Marker key={row.name} position={[row.latitude, row.longitude]}>
+          <Popup>{row.name}</Popup>
+        </Marker>
+      ));
+      setMarkers(newMarkers);
+    });
+  }, []);
 
-const RecyclingCentersMap = () => {
-    
-    const recyclingCenters = [
-      {
-        name: "Recycling Center 1",
-        location: [18.1995, -67.1448],
-      },
-      {
-        name: "Recycling Center 2",
-        location: [37.7747, -122.407],
-      },
-      {
-        name: "Recycling Center 3",
-        location: [37.7791, -122.4158],
-      },
-    ];
+  useEffect(() => {
+    // Get the user's location
+    navigator.geolocation.getCurrentPosition((position) => {
+      setUserLocation([position.coords.latitude, position.coords.longitude]);
+    });
+  }, []);
 
-    const isSmallScreen = useMediaQuery('(max-width: 600px)');
-  
-    function MyMap() {
-      const map = useMap();
-      map.invalidateSize(); // fix for Leaflet map not rendering properly on initial load
-      return null;
-    }
-  
-    return (
-        <>
-        <StyledCardHeader title="Recycling Centers"/>
-        <Card sx={{borderRadius: 2}  }>
-            
-      <div style={{ height: isSmallScreen ? "60vh" : "calc(100vh - 240px)" }}>
-        
-        <MapContainer center={start} zoom={13} style={{ height: "100%" } }>
-          <TileLayer url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png" />
-          {recyclingCenters.map((markers) => (
-            <Marker key={markers.name} position={markers.location} >
-              <Popup>{markers.name}</Popup>
-            </Marker>
-          ))}
-          <MyMap />
-        </MapContainer>
-      </div>
-      </Card>
-        </>
-        
-    );
-  };
-  
-  export default RecyclingCentersMap;
+  useEffect(() => {
+    const handleResize = () => {
+      setMapSize({ width: "100%", height: `${window.innerHeight * 0.7}px` });
+    };
+    window.addEventListener("resize", handleResize);
+
+    return () => window.removeEventListener("resize", handleResize);
+  }, []);
+
+  return (
+    <MapContainer center={[51.505, -0.09]} zoom={13} style={{ ...mapSize }}>
+      <TileLayer url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png" />
+      {markers}
+      {userLocation && <UserLocationMarker position={userLocation} />}
+    </MapContainer>
+  );
+};
+
+const UserLocationMarker = ({ position }) => {
+  const map = useMap();
+
+  useEffect(() => {
+    // Create the marker
+    const marker = L.marker(position, {
+      icon: L.icon({
+        iconUrl: "https://cdn0.iconfinder.com/data/icons/small-n-flat/24/678111-map-marker-512.png",
+        iconSize: [48, 48],
+      }),
+    });
+
+    // Create the circle
+    const circle = L.circle(position, {
+      radius: 80,
+      color: "red",
+      fillColor: "#3186cc",
+      fillOpacity: 0.2,
+    });
+
+    // Add the marker and circle to the map
+    marker.addTo(map);
+    circle.addTo(map);
+
+    // Set the map's view to the user's location
+    map.setView(position, 13);
+
+    return () => {
+      // Remove the marker and circle from the map when the component unmounts
+      marker.remove();
+      circle.remove();
+    };
+  }, [map, position]);
+
+  return null;
+};
+
+export default MapWithCSVMarkers;
